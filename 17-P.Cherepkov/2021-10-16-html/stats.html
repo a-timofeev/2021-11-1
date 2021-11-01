@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PC1 Stats</title>
+    </head>
+    <body>
+        <h4>Input text</h4>
+
+        <script>
+            function info() {
+                let str = document.getElementById("text").value.trim();
+                let len = str.length;
+                
+                let wrds = 0;
+                let lower = 0;
+                let upper = 0;
+                let dgts = 0;
+                for (let i = 0; i < len; i++) {
+                    if (str[i] == ' ' || str[i] == '\n') {
+                        wrds++;
+                    }
+                    if (str.charCodeAt(i) >= 97 && str.charCodeAt(i) <= 122 ) {
+                        lower++;
+                    }
+                    if (str.charCodeAt(i) >= 65 && str.charCodeAt(i) <= 90) {
+                        upper++;
+                    }
+                    if (str.charCodeAt(i) >= 48 && str.charCodeAt(i) <= 57) {
+                        dgts++;
+                    }
+                }
+
+                if (wrds != 0) {
+                    wrds++;
+                }
+
+                document.getElementById("len").innerText = "Length: " + len;
+                document.getElementById("dgts").innerText = "Digits: " + dgts;
+                document.getElementById("lower").innerText = "Lower case letters: " + lower;
+                document.getElementById("upper").innerText = "Upper case letters: " + upper;
+                document.getElementById("wrds").innerText = "Words: " + wrds;
+            }
+        </script>
+        <textarea id="text" rows="10" cols="30" onkeyup="info()">The quick brown fox jumps over the lazy dog</textarea>
+        <p id="len"  ></p>
+        <p id="dgts" ></p>
+        <p id="lower"></p>
+        <p id="upper"></p>
+        <p id="wrds" ></p>
+        <script>info()</script>
+        <a href="index.html">back</a>
+    </body>
+</html>
