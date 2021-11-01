@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PC1 Sort</title>
+    </head>
+    <body>
+        <h4>Input numbers</h4>
+        <script>
+            let x = 0;
+
+            function Iter() {
+                let num = document.createElement("num");
+                num.innerHTML = "<input type='number' id='num" + x + "'><br>";
+                document.body.insertBefore(num, document.getElementById("add"));
+                x++;
+            }
+
+            function sort() {
+                let L = [];
+                for (let i = 0; i < x; i++) {
+                    L.push(document.getElementById("num" + i).value);
+                }
+                L.sort(function(a, b) { return a - b; });
+
+                let res = "";
+                for (let i = 0; i < x; i++) {
+                    res += L[i] + " ";
+                }
+                document.getElementById("array").innerText = res;
+            }
+        </script>
+        <button type='button' id='add' onclick='Iter()'>+</button>
+        <button type='button' id='submit' onclick='sort()'>sort</button>
+        <p id="array"></p>
+        <a href="index.html">back</a>
+    </body>
+</html>
