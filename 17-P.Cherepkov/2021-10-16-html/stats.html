@@ -15,9 +15,13 @@
                 let lower = 0;
                 let upper = 0;
                 let dgts = 0;
+                let space = 0;
                 for (let i = 0; i < len; i++) {
                     if (str[i] == ' ' || str[i] == '\n') {
-                        wrds++;
+                        if (str[i + 1] != ' ' && str[i + 1] != '\n') {
+                            wrds++;
+                        }
+                        space++;
                     }
                     if (str.charCodeAt(i) >= 97 && str.charCodeAt(i) <= 122 ) {
                         lower++;
@@ -29,6 +33,8 @@
                         dgts++;
                     }
                 }
+
+                len -= space;
 
                 if (wrds != 0) {
                     wrds++;

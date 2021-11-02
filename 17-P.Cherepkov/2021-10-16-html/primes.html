@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PC1 Primes</title>
+        <style>
+            table, th, td {
+                font-family: JetBrains Mono;
+                border: 2px solid black;
+                background-color: #606060;
+                color: honeydew;
+                border-collapse: collapse;
+                padding: 15px;
+                text-align: center;
+            }
+            #prime {
+                background-color: tomato;
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            let table = document.createElement("table");
+
+            function primes(n) {
+                let L = [];
+                let res = [];
+                for (let i = 2; i <= n; i++) {
+                    L.push(i);
+                }
+                while (L.length > 0) {
+                    p = L[0];
+                    res.push(p);
+                    for (let i = 0; i < L.length; i++) {
+                        if (L[i] % p == 0) {
+                            L.splice(i, 1);
+                        }
+                    }
+                }
+                return res;
+            }
+
+            function build() {
+                let n = document.getElementById("num").value;
+                let tableCode = "<table>";
+                let p = primes(n);
+
+                try {
+                    table.parentNode.removeChild(table);
+                }
+                catch {
+                }
+
+                for (let y = 0; y < n / 10; y++) {
+                    tableCode += "<tr>";
+                    for (let x = 0; x < 10 && y * 10 + x < n; x++) {
+                        if (p.indexOf(y * 10 + x + 1) != -1) {
+                            tableCode += "<td id='prime'>" + (y * 10 + x + 1) + "</td>";
+                        }
+                        else {
+                            tableCode += "<td>" + (y * 10 + x + 1) + "</td>";
+                        }
+                    }
+                    tableCode += "</tr>";
+                }
+                tableCode += "</table>";
+                table.innerHTML = tableCode;
+                document.body.insertBefore(table, document.getElementById("ref"));
+            }
+        </script>
+        <h4>Input number</h4>
+        <input type='number' id='num' onkeyup='build()'><br><br>
+        <a href="index.html" id='ref'>back</a>
+    </body>
+</html>
