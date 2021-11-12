@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Andrew</title>
+ <meta charset="utf-8" />
+ <script type="text/javascript" src="script01.js"></script>
+</head>
+<body>
+ <h1>Programming hometask</h1>
+ <p>The work is done by Andrew Ratkov, 11-1</p>
+<!-- <div onClick="showMessage();">Ultra useful button</div> -->
+ <input type="button" name="button" value="Можете нажать из любопытства" onclick="showMessage();">
+ <form name="form0">
+     Input point coordinates<br> 
+     <input type="text" size="8" maxlength="8" name="p0x"><br>
+     <input type="text" size="8" maxlength="8" name="p0y"><br>
+     <input type="text" size="8" maxlength="8" name="p0z"><br>
+     Input normal's coordinates:<br>
+     <input type="text" size="8" maxlength="8" name="nx"><br>
+     <input type="text" size="8" maxlength="8" name="ny"><br>
+     <input type="text" size="8" maxlength="8" name="nz"><br>
+   <input type="button" value="Получить уравнения" onClick="Plane_Equations(form0);">
+   <input type="reset" value="Отменить"><br>
+   <table  bgcolor="SkyBlue" border="1">
+   <caption>Very unique table:</caption>
+   <tr><th>Название уравнения</th><th>Уравнение</th></tr>
+   <tr><th>Уравнение плоскости по нормали и точке в координатах</th>
+   <th><input type="text" size="100" maxlength="100" name="normal_and_point_in_coord" readonly></th></tr>
+   <tr><th>Общее уравнение</th>
+   <th><input type="text" size="100" maxlength="100" name="general_eq" readonly></th></tr>
+   <tr><th>Ещё одно, название которого автору неизвестно</th>
+   <th><input type="text" size="100" maxlength="100" name="one_more_eq" readonly></th></tr>
+   </table>
+ </form><br><br>
+ Упражнение на циклы:<br> 
+ <form name="form1">
+  Input n <= 1000: <input type="text" size="8" maxlength="8" name="num"><br>
+  <input type="reset" value="Отменить">
+  <input type="button" value="Get number of prime dividers" onClick="num_of_different_prime_dividers(form1);">
+  Number of different prime dividers: <input type="text" size="100" maxlength="100" name="cnt" readonly>
+ </form>
+</body>
+</html>              
+            
