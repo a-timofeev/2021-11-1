@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>🤔</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+
+<header class="shadow glassy-bg">
+    <h1>вкошп be like😁</h1>
+    <img src="https://c.tenor.com/FfuiDnqY3G0AAAAC/wide-putin.gif"
+         width="48" height="48" alt="boom"/>
+</header>
+
+<main class="shadow">
+    <h2>
+        Еджадж🏳‍🌈
+    </h2>
+
+    <button id="bad-button" class="shadow absolute" onclick="destroy()">REJUDGE ALL</button>
+
+    <a href="./index.html">Назад</a>
+</main>
+
+<script>
+    const button = document.getElementById("bad-button");
+    const rect = button.getBoundingClientRect();
+    document.addEventListener("mousemove", e => {
+        button.style.left = `${e.clientX - rect.width / 2}px`;
+        button.style.top = `${e.clientY - rect.height / 2}px`;
+    });
+
+    function destroy() {
+        document.body.innerHTML = "";
+        document.body.style.backgroundColor = "#000";
+    }
+</script>
+</body>
+</html>

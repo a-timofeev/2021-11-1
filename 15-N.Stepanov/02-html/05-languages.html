@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>🤔</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+
+<header class="shadow glassy-bg">
+    <h1>Языки программирования⌨️</h1>
+    <img src="https://media.giphy.com/media/3ohs81rDuEz9ioJzAA/giphy-downsized-large.gif"
+         width="48" height="48" alt="boom"/>
+</header>
+
+<main class="shadow">
+    <h2>
+        Битва языков
+    </h2>
+
+    <div class="center">
+        <label>
+            <select id="lang1">
+            </select>
+        </label>
+        VS
+        <label>
+            <select id="lang2">
+            </select>
+        </label>
+    </div>
+
+    <div class="center spaced-out">
+        <button onclick="fight()">В бой!</button>
+    </div>
+
+    <div class="center">
+        <div>Игра: <span id="game-id">0</span> / <span id="game-id-max">0</span></div>
+    </div>
+    <div class="center spaced-out">
+        <table>
+            <tr>
+                <th style="min-width: 60px"></th>
+                <th style="min-width: 60px">A</th>
+                <th style="min-width: 60px">B</th>
+            </tr>
+            <tr>
+                <th>A</th>
+                <td id="fa">6</td>
+                <td id="fb">9</td>
+            </tr>
+            <tr>
+                <th>B</th>
+                <td id="fc">9</td>
+                <td id="fd">6</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="center">
+        Результаты:
+        <span id="score1">
+
+        </span>
+        /
+        <span id="score2">
+
+        </span>
+    </div>
+
+    <div class="center" id="verdict">
+
+    </div>
+
+    <a href="./index.html">Назад</a>
+</main>
+
+<script>
+    function randomBool() {
+        return Math.random() < 0.5;
+    }
+
+    function randomInt(max) {
+        return Math.floor(Math.random() * max);
+    }
+
+    const languages = [
+        {name: "python🐍", strategy: (a, b, c, d) => (a + c < b + d)},
+        {name: "asm👴", strategy: (_a, _b, _c, _d) => true},
+        {name: "C++😛", strategy: (_a, _b, _c, _d) => false},
+        {name: "Java💩", strategy: (a, b, c, d) => (a + c > b + d)},
+        {name: "Javascript🏁", strategy: (_a, _b, _c, _d) => randomBool()},
+        {name: "Haskell🎢", strategy: (a, b, c, d) => (a + c < b + d) ^ (randomBool() && randomBool())},
+    ];
+
+    function populate(element) {
+        for (let [i, language] of languages.entries()) {
+            const option = document.createElement("option");
+            option.value = i;
+            option.innerText = language.name;
+            element.appendChild(option);
+        }
+    }
+
+    const selectorLang1 = document.getElementById("lang1");
+    const selectorLang2 = document.getElementById("lang2");
+
+    populate(selectorLang1);
+    populate(selectorLang2);
+
+    let isActive = false;
+    const maxIterations = 100;
+    const delay = 50;
+
+    const fieldA = document.getElementById("fa");
+    const fieldB = document.getElementById("fb");
+    const fieldC = document.getElementById("fc");
+    const fieldD = document.getElementById("fd");
+    const gameIdEl = document.getElementById("game-id");
+    const gameIdMaxEl = document.getElementById("game-id-max");
+    const score1El = document.getElementById("score1");
+    const score2El = document.getElementById("score2");
+    const verdictEl = document.getElementById("verdict");
+
+    gameIdMaxEl.innerText = maxIterations;
+
+    function generateField() {
+        const a = randomInt(11);
+        const b = randomInt(11);
+        const c = randomInt(11);
+        const d = randomInt(11);
+        fieldA.innerText = `${a}, ${a}`;
+        fieldB.innerText = `${b}, ${c}`;
+        fieldC.innerText = `${c}, ${b}`;
+        fieldD.innerText = `${d}, ${d}`;
+        return [a, b, c, d];
+    }
+
+    let total1 = 0;
+    let total2 = 0;
+
+    function updateTotal() {
+        score1El.innerText = total1;
+        score2El.innerText = total2;
+    }
+
+    function iteration(i, strategy1, strategy2, lang1, lang2) {
+        gameIdEl.innerText = i;
+
+        if (i === maxIterations) {
+            isActive = false;
+            if (total1 === total2) {
+                verdictEl.innerText = "Ничья!";
+            } else if (total1 > total2) {
+                verdictEl.innerText = `Победил  ${languages[lang1].name}`;
+            } else {
+                verdictEl.innerText = `Победил  ${languages[lang2].name}`;
+            }
+            return;
+        }
+
+        isActive = true;
+        const [a, b, c, d] = generateField();
+        const res1 = strategy1(a, b, c, d);
+        const res2 = strategy2(a, b, c, d);
+
+        if (res1 && res2) {
+            total1 += d;
+            total2 += d;
+        } else if (res1 && !res2) {
+            total1 += c;
+            total2 += b;
+        } else if (!res1 && res2) {
+            total1 += b;
+            total2 += c;
+        } else {
+            total1 += a;
+            total2 += a;
+        }
+
+        updateTotal();
+
+        setTimeout(iteration, delay, i + 1, strategy1, strategy2, lang1, lang2);
+    }
+
+    function fight() {
+        if (isActive) return;
+        const lang1 = selectorLang1.value;
+        const lang2 = selectorLang2.value;
+        const strategy1 = languages[lang1].strategy;
+        const strategy2 = languages[lang2].strategy;
+        total1 = 0;
+        total2 = 0;
+        iteration(0, strategy1, strategy2, lang1, lang2);
+    }
+</script>
+</body>
+</html>

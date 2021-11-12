@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>🤔</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+
+<header class="shadow glassy-bg">
+    <h1>A + B🎉</h1>
+    <img src="https://static.turbosquid.com/Preview/2020/10/26__18_04_25/Minecraft_Creeper_A_sign_B.jpg44BF7378-9591-4036-8F4F-D8AE2AC3EED8DefaultHQ.jpg"
+         width="48" height="36" alt="boom"/>
+</header>
+
+<main class="shadow">
+    <h2>
+        Сложить два числа🧐
+    </h2>
+
+    <div>
+        <label>
+            <input id="a-input" class="shadow" value="9"/>
+        </label>
+        +
+        <label>
+            <input id="b-input" class="shadow" value="10"/>
+        </label>
+        <button class="shadow" onclick="calc()">
+            Вычислить
+        </button>
+    </div>
+    <div class="spaced-out">
+        Результат: <span id="result">21</span>
+    </div>
+    <a href="./index.html">Назад</a>
+</main>
+<script>
+    function calc() {
+        const a = parseInt(document.getElementById("a-input").value);
+        const b = parseInt(document.getElementById("b-input").value);
+        let result;
+        if (isNaN(a) || isNaN(b)) {
+            result = "bruh";
+        } else if (a === 9 && b === 10) {
+            result = 21;
+        } else {
+            result = a + b;
+        }
+        document.getElementById("result").innerText = result;
+    }
+</script>
+</body>
+</html>
