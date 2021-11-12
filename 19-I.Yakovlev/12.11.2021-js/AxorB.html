@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<title>Main page</title>
+	</head>
+	<body>
+		<form name="input">
+			<p>A:</p>
+			<input type = "number" id="A" value="0"><br>
+			<p>B:</p>
+			<input type = "number" id="B" value="0"><br>
+			<p>A+B:</p>
+			<input type = "number", id="C" value="0" readonly><br>
+		</form>
+		<script>
+			function onchange(){
+				var A = document.getElementById("A").value;
+				var B = document.getElementById("B").value;
+				var C = document.getElementById("C");
+				C.value = Number(A) ^ Number(B);
+			}
+			document.getElementById("A").addEventListener("change", onchange);
+			document.getElementById("B").addEventListener("change", onchange);
+		</script>
+	</body>
+</html>
