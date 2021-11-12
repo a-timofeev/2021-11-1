@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<title>Main page</title>
+	</head>
+	<body>
+		<form name="input">
+			<p>A:</p>
+			<input type = "number" id="A" value="0"><br>
+			<p>B:</p>
+			<input type = "number" id="B" value="0"><br>
+			<p>gcd(A, B):</p>
+			<input type = "number", id="C" value="0" readonly><br>
+		</form>
+		<script>
+			function gcd(a, b){
+				if (b == 0){
+					return a;
+				}
+				return gcd(b, a % b);
+			}
+			function onchange(){
+				var A = document.getElementById("A").value;
+				var B = document.getElementById("B").value;
+				var C = document.getElementById("C");
+				//gcd(Number(1), Number(1));
+				//C.value = 1;
+				C.value = gcd(Number(A), Number(B));
+			}
+			document.getElementById("A").addEventListener("change", onchange);
+			document.getElementById("B").addEventListener("change", onchange);
+		</script>
+	</body>
+</html>
