@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title> Interse-Uni </title>
+  </head>
+  <body>
+    <h1>Angle between lines</h1>
+    <h2>Type coefficients of equation of the lines</h2>
+    <script>
+      function res() {
+        var a1 = Number(document.getElementById("a1").value);
+        var b1 = Number(document.getElementById("b1").value);
+        var a2 = Number(document.getElementById("a2").value);
+        var b2 = Number(document.getElementById("b2").value);
+        var mcos = (a1 * a2 + b1 * b2) / (Math.sqrt(a1 * a1 + b1 * b1) * Math.sqrt(a2 * a2 + b2 * b2));
+        var angle = Math.acos(mcos);
+        var angle_deg = (180 / Math.PI) * angle;
+        document.getElementById("res0").innerHTML = "Angle(deg):";
+        document.getElementById("res1").innerHTML = angle_deg;
+      }
+    </script>
+    <h3>Write in format ax + by + c = 0</h3>
+    Line 1:<br>
+    a: <input placeholder="here" id="a1">
+    b: <input placeholder="here" id="b1">
+    c: <input placeholder="here" id="c1"> <br>
+    Line 2: <br>
+    a: <input placeholder="here" id="a2">
+    b: <input placeholder="here" id="b2">
+    c: <input placeholder="here" id="c2"><br>
+    <button onclick="res()">Calculate</button><br>
+    <p id="res0"></p>
+    <p id="res1"></p>
+
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title> Interse-Uni </title>
+  </head>
+  <body>
+    <h1>Intersection and Union of Sets</h1>
+    <h2>Type values separated by spaces and select action</h2>
+    <script>
+      function m_del(a) {
+        var was = a[0];
+        var r = new Array();
+        r.push(a[0]);
+        for (i = 1; i < a.length; i++) {
+          if (a[i] != was){
+            r.push(a[i]);
+            was = a[i];
+          }
+        }
+        return r
+      }
+      function intersect() {
+        let set01 = String(document.getElementById("set01").value).split(" ").sort();
+        let set02 = String(document.getElementById("set02").value).split(" ").sort();
+        var res = new Array();
+        var r01 = m_del(set01);
+        var r02 = m_del(set02);
+        var len01 = r01.length;
+        var len02 = r02.length;
+        for (i = 0; i < len01; i++) {
+          for (j = 0; j < len02; j++) {
+            if (r01[i] == r02[j]) {
+              res.push(r01[i]);
+            }
+          }
+        }
+        document.getElementById("res0").innerHTML = "Your result:";
+        document.getElementById("res1").innerHTML = res.join(", ");
+      }
+      function unite() {
+        let set01 = String(document.getElementById("set01").value).split(" ").sort();
+        let set02 = String(document.getElementById("set02").value).split(" ").sort();
+        var r = set01.concat(set02);
+        var res = m_del(r.sort());
+        document.getElementById("res0").innerHTML = "Your result:";
+        document.getElementById("res1").innerHTML = res.join(", ");
+      }
+    </script>
+    Set 01 = <input placeholder="here" id="set01"><br>
+    Set 02 = <input placeholder="here" id="set02"><br>
+    <button onclick="intersect()">Intersect</button><br>
+    <button onclick="unite()">Unite</button><br>
+    <p id="res0"></p>
+    <p id="res1"></p>
+
+  </body>
+</html>

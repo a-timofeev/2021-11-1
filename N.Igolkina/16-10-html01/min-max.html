@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title> min-max </title>
+  </head>
+  <body>
+    <h1>Min and Max</h1>
+    <h2>Type values separated by spaces</h2>
+    <script>
+      function m_max(a) {
+        var max = Number(a[0]);
+        for (i = 1; i < a.length; i++){
+          if (Number(a[i]) >= max) {
+            max = Number(a[i]);
+          }
+        }
+        return max;
+      }
+      function m_min(a) {
+        var min = Number(a[0]);
+        for (i = 1; i < a.length; i++){
+          if (Number(a[i]) <= min) {
+            min = Number(a[i]);
+          }
+        }
+        return min;
+      }
+      function f() {
+        let a = document.getElementById("string").value.split(' ');
+        max = m_max(a)
+        min = m_min(a)
+        document.getElementById("entered").innerHTML = "What you entered:";
+        document.getElementById("enter").innerHTML = a.join(", ");
+        document.getElementById("res_max").innerHTML = "Your max:";
+        document.getElementById("max").innerHTML = max;
+        document.getElementById("res_min").innerHTML = "Your min:";
+        document.getElementById("min").innerHTML = min;
+      }
+    </script>
+    string = <input placeholder="here" id="string"><br>
+    <button onclick="f()">Print!</button><br>
+    <p id="entered"></p>
+    <p id="enter"></p>
+    <p id="res_max"></p>
+    <p id="max"></p>
+    <p id="res_min"></p>
+    <p id="min"></p>
+
+  </body>
+</html>
