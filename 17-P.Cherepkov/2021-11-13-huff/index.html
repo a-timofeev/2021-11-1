@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PC1 Huffman coding</title>
+        <style>
+            body {
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                background-color: #1f1f1f;
+                color: white;
+            }
+            textarea {
+                resize:none;
+                width: 400px;
+                height: 300px;
+                background-color: #363636;
+                color: white;
+                font-size: 17px;
+                font-family: JetBrains Mono;
+            }
+        </style>
+    </head>
+    <body>
+        <script type="text/javascript" src="main.js"></script>
+        <p style="text-align: right; font-size: 8px;">by Petr Cherepkov</p>
+        <h1 style="font-size: 400%; text-align: center;">Huffman coding</h1>
+        <h1>1. Frequences</h1>
+        <p id="freqs"></p>
+        <h1>2. Codes</h1>
+        <h1>3. Encoded text</h1>
+        <h1>4. Binary</h1>
+        <table style="margin-left: auto; margin-right: auto;">
+            <tr>
+                <!-- text (decoded) -->
+                <td rowspan="2"><textarea id="toEncode" onkeyup="encodeMain()"></textarea></td>
+                <!-- control button -->
+                <td style="vertical-align: bottom;"><button style="padding: 10px;">➞</button></td>
+                <!-- encoded -->
+                <td rowspan="2"><textarea id="toDecode" onkeyup=""></textarea></td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;"><button style="padding: 10px;"><b>🠔</b></button></td>
+            </tr>
+        </table>
+    </body>
+</html>
