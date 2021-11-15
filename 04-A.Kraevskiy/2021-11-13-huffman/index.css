@@ -1,0 +1,10 @@
+textarea {
+    display: block;
+    margin: 5px 0px;
+}
+
+table, td {
+    border-collapse: collapse;
+    border-radius: 10px;
+    border: 0.1px solid black;
+}
