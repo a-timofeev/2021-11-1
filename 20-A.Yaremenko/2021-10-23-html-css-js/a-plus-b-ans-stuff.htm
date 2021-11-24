@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>A+B example</title>
+</head>
+
+<body>
+<label>A</label><br>
+<input type="text", id="a", value="0"></input><br>
+<label>B</label><br>
+<input type="text", id="b", value="0"></input><br>
+<button type="button" onclick="add()">ADD</button>
+<button type="button" onclick="permute()">PERMUTE</button>
+<p id="res"></p>
+
+<script>
+function add() {
+  let a = +document.getElementById("a").value || 0, b = +document.getElementById("b").value || 0, c = a + b;
+  document.getElementById("res").innerHTML = c.toString();
+}
+
+function p(pref, a) {
+  if (pref.length == a) {
+    document.getElementById("res").innerHTML += pref.toString() + "<br>";
+  }
+  let d = new Array(a).fill(0);
+  for (x in pref) {
+    d[pref[x] - 1] = 1;
+  }
+  for (let i = 0; i < a; i++) {
+    if (d[i] == 0) {
+      pref.push(i + 1);
+      p(pref, a);
+      pref.pop();
+    }
+  }
+}
+
+function permute() {
+  let a = +document.getElementById("a").value || 0, b = +document.getElementById("b").value || 0;
+  let pref = [];
+  document.getElementById("res").innerHTML = "";
+  p(pref, a + b);
+}
+</script>
+</body>
+
+</html>
