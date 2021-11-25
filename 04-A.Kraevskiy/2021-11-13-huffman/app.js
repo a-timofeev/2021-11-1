@@ -10,7 +10,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-import { huffmanEncode, huffmanDecode } from './huffman.js';
+import { huffmanEncode, huffmanDecode, InvalidCodeError } from './huffman.js';
 
 var Input = function (_React$Component) {
   _inherits(Input, _React$Component);
@@ -192,7 +192,9 @@ function EncodedText(_ref7) {
   );
 }
 
-var EncodeText = function EncodeText() {
+var EncodeText = function EncodeText(_ref8) {
+  var isShowing = _ref8.isShowing;
+
   var _React$useState = React.useState("Lorem"),
       _React$useState2 = _slicedToArray(_React$useState, 2),
       text = _React$useState2[0],
@@ -222,7 +224,7 @@ var EncodeText = function EncodeText() {
 
   return React.createElement(
     'div',
-    null,
+    { className: isShowing ? '' : 'hidden' },
     React.createElement(
       'h2',
       null,
@@ -235,32 +237,50 @@ var EncodeText = function EncodeText() {
   );
 };
 
-var DecodeText = function DecodeText() {
+var DecodeText = function DecodeText(_ref9) {
+  var isShowing = _ref9.isShowing;
+
   var _React$useState3 = React.useState(''),
       _React$useState4 = _slicedToArray(_React$useState3, 2),
       binaryString = _React$useState4[0],
       changeBinaryString = _React$useState4[1];
 
+  var result = void 0;
+  var text = void 0;
+  try {
+    text = huffmanDecode(binaryString);
+    result = React.createElement('textarea', { value: text, readOnly: true });
+  } catch (error) {
+    if (error instanceof Error) {
+      result = React.createElement(
+        'p',
+        null,
+        'Invalid code'
+      );
+    } else {
+      // throw error;
+    }
+  }
   return React.createElement(
     'div',
-    null,
+    { className: isShowing ? '' : 'hidden' },
     React.createElement(
       'h2',
       null,
       'Decoding'
     ),
-    React.createElement('input', { value: binaryString, onChange: function onChange(e) {
+    React.createElement('textarea', { value: binaryString, onChange: function onChange(e) {
         return changeBinaryString(e.target.value);
       } }),
-    React.createElement('input', { value: huffmanDecode(binaryString) })
+    result
   );
 };
 
 var App = function App() {
   var _React$useState5 = React.useState(true),
       _React$useState6 = _slicedToArray(_React$useState5, 2),
-      isCodingState = _React$useState6[0],
-      changeCodingState = _React$useState6[1];
+      isEncodingState = _React$useState6[0],
+      changeIsEncodingState = _React$useState6[1];
 
   return React.createElement(
     React.Fragment,
@@ -273,18 +293,19 @@ var App = function App() {
     React.createElement(
       'button',
       { onClick: function onClick() {
-          return changeCodingState(true);
+          return changeIsEncodingState(true);
         } },
       'Encode'
     ),
     React.createElement(
       'button',
       { onClick: function onClick() {
-          return changeCodingState(false);
+          return changeIsEncodingState(false);
         } },
       'Decode'
     ),
-    isCodingState ? React.createElement(EncodeText, null) : React.createElement(DecodeText, null)
+    React.createElement(EncodeText, { isShowing: isEncodingState }),
+    React.createElement(DecodeText, { isShowing: !isEncodingState })
   );
 };
 

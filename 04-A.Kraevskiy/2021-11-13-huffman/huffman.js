@@ -4,6 +4,12 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var getFrequencyOfSymbols = function getFrequencyOfSymbols(string) {
@@ -113,7 +119,25 @@ var huffmanEncode = function huffmanEncode(text) {
     };
 };
 
+var InvalidCodeError = function (_Error) {
+    _inherits(InvalidCodeError, _Error);
+
+    function InvalidCodeError(message) {
+        _classCallCheck(this, InvalidCodeError);
+
+        var _this = _possibleConstructorReturn(this, (InvalidCodeError.__proto__ || Object.getPrototypeOf(InvalidCodeError)).call(this, message));
+
+        _this.name = 'InvalidCodeError';
+        return _this;
+    }
+
+    return InvalidCodeError;
+}(Error);
+
 var huffmanDecode = function huffmanDecode(binaryString) {
+    if (binaryString.length % 8 !== 0 || (binaryString.match(/[01]/g) || []).length < binaryString.length) {
+        throw new InvalidCodeError('Invalid code');
+    }
     var end_length = parseInt(binaryString.slice(0, 3), 2);
     var content = binaryString.slice(3, binaryString.length - end_length);
     var i = 0;
@@ -124,6 +148,9 @@ var huffmanDecode = function huffmanDecode(binaryString) {
         i += 16;
     } else {
         var dfs = function dfs(tree) {
+            if (i >= content.length) {
+                throw new InvalidCodeError('Invalid code');
+            }
             if (content[i] === '0') {
                 i++;
                 tree["0"] = {};
@@ -169,6 +196,9 @@ var huffmanDecode = function huffmanDecode(binaryString) {
             if (typeof obj === 'string') {
                 return obj;
             }
+            if (i >= content.length) {
+                throw new InvalidCodeError('Invalid code');
+            }
             return decoder(obj[content[i++]]);
         };
         while (i < content.length) {
@@ -177,4 +207,4 @@ var huffmanDecode = function huffmanDecode(binaryString) {
     }
     return text;
 };
-export { huffmanEncode, huffmanDecode };
+export { huffmanEncode, huffmanDecode, InvalidCodeError };

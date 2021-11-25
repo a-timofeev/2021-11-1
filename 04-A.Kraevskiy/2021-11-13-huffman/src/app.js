@@ -1,6 +1,6 @@
 'use strict';
 
-import { huffmanEncode, huffmanDecode } from './huffman.js';
+import { huffmanEncode, huffmanDecode, InvalidCodeError } from './huffman.js';
 
 class Input extends React.Component {
   constructor(props) {
@@ -84,7 +84,7 @@ function EncodedText({ codedTextWithHeader }) {
   </React.Fragment>
 }
 
-const EncodeText = () => {
+const EncodeText = ({ isShowing }) => {
   const [text, setText] = React.useState("Lorem");
   if (text === '') {
     return <div>
@@ -99,7 +99,7 @@ const EncodeText = () => {
     codedTree,
     codedText,
     codedTextWithHeader } = huffmanEncode(text);
-  return <div>
+  return <div className={isShowing ? '' : 'hidden'}>
     <h2>Encoding</h2>
     <Input text={text} setText={setText} />
     <Frequencies freq={frequency} />
@@ -109,28 +109,38 @@ const EncodeText = () => {
 
 }
 
-const DecodeText = () => {
+const DecodeText = ({ isShowing }) => {
   const [binaryString, changeBinaryString] = React.useState('');
-
-
-  return <div>
+  let result;
+  let text;
+  try {
+    text = huffmanDecode(binaryString);
+    result = <textarea value={text} readOnly />;
+  }
+  catch (error) {
+    if (error instanceof Error) {
+      result = <p>Invalid code</p>;
+    }
+    else {
+      // throw error;
+    }
+  }
+  return <div className={isShowing ? '' : 'hidden'}>
     <h2>Decoding</h2>
-    <input value={binaryString} onChange={e => changeBinaryString(e.target.value)}/>
-    <input value={huffmanDecode(binaryString)}></input>
+    <textarea value={binaryString} onChange={e => changeBinaryString(e.target.value)} />
+    {result}
   </div>
 }
 
 const App = () => {
-  const [isCodingState, changeCodingState] = React.useState(true);
-
+  const [isEncodingState, changeIsEncodingState] = React.useState(true);
 
   return <React.Fragment>
     <h1>Huffman</h1>
-    <button onClick={() => changeCodingState(true)}>Encode</button><button onClick={() => changeCodingState(false)}>Decode</button>
-    {isCodingState ?
-      <EncodeText /> :
-      <DecodeText />
-    }
+    <button onClick={() => changeIsEncodingState(true)}>Encode</button>
+    <button onClick={() => changeIsEncodingState(false)}>Decode</button>
+    <EncodeText isShowing={isEncodingState} />
+    <DecodeText isShowing={!isEncodingState} />
   </React.Fragment>
 }
 

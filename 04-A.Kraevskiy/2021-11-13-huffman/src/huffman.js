@@ -104,7 +104,17 @@ const huffmanEncode = (text) => {
     }
 }
 
+class InvalidCodeError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'InvalidCodeError';
+    }
+}
+
 const huffmanDecode = (binaryString) => {
+    if (binaryString.length % 8 !== 0 || (binaryString.match(/[01]/g) || []).length < binaryString.length) {
+        throw new InvalidCodeError('Invalid code');
+    }
     const end_length = parseInt(binaryString.slice(0, 3), 2);
     const content = binaryString.slice(3, binaryString.length - end_length);
     let i = 0;
@@ -116,6 +126,9 @@ const huffmanDecode = (binaryString) => {
     }
     else {
         const dfs = (tree) => {
+            if (i >= content.length) {
+                throw new InvalidCodeError('Invalid code');
+            }
             if (content[i] === '0') {
                 i++;
                 tree["0"] = {};
@@ -160,12 +173,15 @@ const huffmanDecode = (binaryString) => {
             if (typeof obj === 'string') {
                 return obj;
             }
+            if (i >= content.length) {
+                throw new InvalidCodeError('Invalid code');
+            }
             return decoder(obj[content[i++]]);
         }
-        while(i < content.length) {
-            text += decoder(codesTree); 
+        while (i < content.length) {
+            text += decoder(codesTree);
         }
     }
     return text;
 }
-export { huffmanEncode, huffmanDecode };
+export { huffmanEncode, huffmanDecode, InvalidCodeError };
