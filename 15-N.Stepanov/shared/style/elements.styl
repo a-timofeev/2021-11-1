@@ -1,0 +1,66 @@
+@import "theme.styl"
+
+html, body, #root
+    min-height 100%
+    padding 0
+    margin 0
+    font-family $font-stack
+    font-size 18px
+    background-color $bg-color-accent
+
+header
+    position sticky
+    $padding = space(2)
+    padding $padding
+    width "calc(100% - %s)" % ($padding * 2)
+    top 0
+    display flex
+    margin-bottom space(1)
+    & > h1
+        font-size 42px
+        flex-grow 1
+        margin 0
+
+main
+    margin auto
+    width 800px
+    max-width 95vw
+    padding space(4)
+    background-color $bg-color
+    & > h2
+        font-size 32px
+        padding 0 space(6)
+    & > h3
+        font-size 24px
+        padding 0 space(6)
+
+input, input:focus
+    outline none
+    border none
+    border-radius 4px
+    font-size 20px
+    padding space(1)
+
+button, select
+    outline none
+    border none
+    background-color $primary
+    border-radius 4px
+    font-size 20px
+    padding space(1)
+    cursor pointer
+
+a
+    color $primary
+    text-decoration none
+    &:visited
+        color $primary-dark
+
+table
+    background-color $primary-light
+    table-layout fixed
+    .header-cell, .highlight
+        background-color $primary-dark
+
+table td,th
+    padding space(1)

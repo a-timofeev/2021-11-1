@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>🤔</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="shared/style/stylesheet.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="root">
+    <app-header>Привет👋</app-header>
+    <app-main>
+        <h2>
+            Ссылки на штуки🔍
+        </h2>
+
+        <ul class="table-of-contents">
+            <li>Теория игр🎲</li>
+
+            <li>Знакомство с JavaScript и компанией🤝
+                <ul>
+                    <li><a href="02-html/01-a-plus-b.html">A + B</a></li>
+                    <li><a href="02-html/02-a-times-b.html"><s>Задача</s> Таблица для второклассника</a></li>
+                    <li><a href="02-html/03-prefix.html">Префикс<s>ый автомат</s> функция</a></li>
+                    <li><a href="02-html/04-ejudge.html">Симулятор ejudge</a></li>
+                    <li><a href="02-html/05-languages.html">Какой язык лучше?</a></li>
+                    <li><a href="https://youtu.be/dQw4w9WgXcQ">Бесплатные печеньки</a></li>
+                </ul>
+            </li>
+
+            <!--<li><a href="03-huffman/index.html">Алгоритм Хаффмана⌨️</a></li>-->
+        </ul>
+
+        <h2>
+            Полезная информация🧐
+        </h2>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ornare turpis at ipsum faucibus dapibus. Donec
+            sed
+            placerat purus. Duis porta commodo risus, vitae imperdiet justo faucibus nec. Morbi pulvinar luctus nisl
+            vitae
+            sodales. Mauris et nibh arcu. Phasellus et lacus nisl. Nam pretium metus vel massa pharetra, non cursus
+            sapien
+            malesuada. In hac habitasse platea dictumst. Aenean ornare volutpat odio.
+        </p>
+        <p>
+            Duis elementum mi rutrum turpis feugiat, et molestie enim elementum. Praesent sit amet arcu tristique,
+            lobortis
+            augue ac, hendrerit nunc. Mauris convallis malesuada scelerisque. Nunc posuere molestie purus commodo porta.
+            Duis nec elit facilisis, pellentesque enim vitae, tincidunt diam. Aenean purus tellus, vulputate in est
+            feugiat,
+            lacinia eleifend leo. Nunc odio nunc, tempor fermentum faucibus ac, accumsan ut lectus. Aenean vestibulum
+            justo
+            suscipit mi hendrerit, vitae mollis mauris euismod.
+        </p>
+        <p>
+            Aenean congue, arcu a malesuada iaculis, magna leo venenatis neque, eu fringilla urna odio eget arcu. Ut at
+            mollis enim, eu pretium urna. Nulla a nisi in neque rhoncus gravida. Vivamus mauris nunc, volutpat non neque
+            nec, aliquam viverra odio. Donec vel ante aliquam libero pulvinar rutrum. Duis lobortis est tortor, in
+            pulvinar
+            ante fringilla blandit. Donec dignissim enim et risus elementum accumsan. Proin tempus vehicula massa. Sed
+            consectetur dictum consequat.
+        </p>
+        <p>
+            Ut sit amet interdum purus. Mauris at tristique turpis. Nulla suscipit lectus sit amet ante tristique
+            eleifend.
+            Mauris finibus porttitor diam ut aliquam. Suspendisse ac dapibus orci. Vestibulum in lorem non lacus luctus
+            efficitur. Vivamus consectetur nunc ipsum, vitae malesuada leo luctus a.
+        </p>
+        <p>
+            Vestibulum nec mi ullamcorper, iaculis nisl nec, malesuada nulla. Cras eget augue at felis consequat
+            condimentum
+            non at est. Donec volutpat, tortor condimentum aliquet tincidunt, nulla libero porta enim, nec blandit dolor
+            leo
+            ac ex. Donec vestibulum quis tortor commodo venenatis. In efficitur vel erat in maximus. In pharetra posuere
+            justo, sed tempor nibh semper sed. Nullam in erat hendrerit, eleifend ligula a, aliquam magna. Phasellus
+            accumsan orci vitae purus volutpat feugiat. Nam ut interdum magna, vitae posuere nisi. Nulla euismod erat
+            eget
+            faucibus aliquam. Pellentesque vitae enim nec felis condimentum elementum. Aenean pretium enim sed erat
+            dignissim feugiat. Integer id neque vulputate, tristique dui vitae, hendrerit nisi. Donec ex purus, pharetra
+            id
+            ante vel, posuere molestie quam.
+        </p>
+    </app-main>
+</div>
+
+<script>
+    import("./shared/components/all.js").then(_ => new Vue({el: "#root"}))
+</script>
+
+</body>
+</html>
