@@ -2,7 +2,7 @@ import {choice} from "../util/random.js"
 
 export default Vue.component('app-header', {
     template: `
-    <header class="shadow glassy-bg">
+    <header>
         <h1><slot></slot></h1>
         <img :src="imageUrl"
              width="48" height="36" alt="sus"/>

@@ -1,6 +1,6 @@
 export default Vue.component("app-main", {
     template: `
-    <main class="shadow">
+    <main>
         <slot></slot>            
     </main>
     `
