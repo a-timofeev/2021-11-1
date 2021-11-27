@@ -2,12 +2,16 @@
 @import "classes.styl"
 
 html, body, #root
-    min-height 100%
+    min-height 100vh
     padding 0
     margin 0
     font-family $font-stack
     font-size 18px
     background-color $bg-color-accent
+
+#root
+    display flex
+    flex-direction column
 
 header, footer
     $padding = space(2)
@@ -32,6 +36,7 @@ main
     width 800px
     max-width 95vw
     padding space(4)
+    flex-grow 1
     background-color $bg-color
     & > h2
         font-size 32px
