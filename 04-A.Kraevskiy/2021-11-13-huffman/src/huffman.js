@@ -126,7 +126,7 @@ const huffmanDecode = (binaryString) => {
     }
     else {
         const dfs = (tree) => {
-            if (i >= content.length) {
+            if (i + 1 + 16 > content.length) {
                 throw new InvalidCodeError('Invalid code');
             }
             if (content[i] === '0') {
