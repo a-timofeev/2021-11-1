@@ -148,7 +148,7 @@ var huffmanDecode = function huffmanDecode(binaryString) {
         i += 16;
     } else {
         var dfs = function dfs(tree) {
-            if (i >= content.length) {
+            if (i + 1 + 16 > content.length) {
                 throw new InvalidCodeError('Invalid code');
             }
             if (content[i] === '0') {
