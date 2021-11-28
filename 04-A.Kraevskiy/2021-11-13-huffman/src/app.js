@@ -31,20 +31,22 @@ function Frequencies({ freq }) {
     });
 
   return <React.Fragment>
-    <h3>1. Frequencies</h3>
-    <table>
-      {freq_el.length > 0 ?
-        <thead>
-          <tr>
-            <td>letter</td>
-            <td>count</td>
-          </tr>
-        </thead> : undefined
-      }
-      <tbody>
-        {freq_el}
-      </tbody>
-    </table>
+    <details>
+      <summary><h4>Frequencies</h4></summary>
+      <table>
+        {freq_el.length > 0 ?
+          <thead>
+            <tr>
+              <td>letter</td>
+              <td>count</td>
+            </tr>
+          </thead> : undefined
+        }
+        <tbody>
+          {freq_el}
+        </tbody>
+      </table>
+    </details>
   </React.Fragment>
 }
 
@@ -58,26 +60,29 @@ function GeneratedCodes({ codes, freq }) {
     })
 
   return <React.Fragment>
-    <h3>2. Generated codes</h3>
-    <table>
-      {codes_el.length > 0 ?
-        <thead>
-          <tr>
-            <td>letter</td>
-            <td>codes</td>
-          </tr>
-        </thead> : undefined
-      }
-      <tbody>
-        {codes_el}
-      </tbody>
-    </table>
+    <details>
+      <summary><h4>Generated codes</h4></summary>
+
+      <table>
+        {codes_el.length > 0 ?
+          <thead>
+            <tr>
+              <td>letter</td>
+              <td>codes</td>
+            </tr>
+          </thead> : undefined
+        }
+        <tbody>
+          {codes_el}
+        </tbody>
+      </table>
+    </details>
   </React.Fragment>
 }
 
 function EncodedText({ codedTextWithHeader }) {
   return <React.Fragment>
-    <h3>3. Encoded text</h3>
+    <h3>Encoded text</h3>
     <p>
       <textarea value={codedTextWithHeader} readOnly></textarea>
     </p>
@@ -85,26 +90,30 @@ function EncodedText({ codedTextWithHeader }) {
 }
 
 const EncodeText = ({ isShowing }) => {
-  const [text, setText] = React.useState("Lorem");
+  const [text, setText] = React.useState("");
+  let showResult;
   if (text === '') {
-    return <div>
-      <h2>Encoding</h2>
-      <Input text={text} setText={setText} />;
-    </div>
+    showResult = undefined;
   }
-  const {
-    frequency,
-    tree,
-    codes,
-    codedTree,
-    codedText,
-    codedTextWithHeader } = huffmanEncode(text);
-  return <div className={isShowing ? '' : 'hidden'}>
+  else {
+    const {
+      frequency,
+      tree,
+      codes,
+      codedTree,
+      codedText,
+      codedTextWithHeader } = huffmanEncode(text);
+    showResult = <React.Fragment>
+      <Frequencies freq={frequency} />
+      <GeneratedCodes codes={codes} freq={frequency} />
+      <EncodedText codedTextWithHeader={codedTextWithHeader} />
+    </React.Fragment>;
+  }
+
+  return <div className={`encode ${isShowing ? '' : 'hidden'}`}>
     <h2>Encoding</h2>
     <Input text={text} setText={setText} />
-    <Frequencies freq={frequency} />
-    <GeneratedCodes codes={codes} freq={frequency} />
-    <EncodedText codedTextWithHeader={codedTextWithHeader} />
+    {showResult}
   </div>
 
 }
@@ -115,21 +124,21 @@ const DecodeText = ({ isShowing }) => {
   let text;
   try {
     text = huffmanDecode(binaryString);
-    result = <textarea value={text} readOnly />;
+    result = text;
   }
   catch (error) {
-    if (error instanceof Error) {
-      result = <p>Invalid code</p>;
+    if (error.name === 'InvalidCodeError') {
+      result = '';
     }
     else {
-      // throw error;
+      throw error;
     }
   }
-  return <div className={isShowing ? '' : 'hidden'}>
+  return <div className={'decode' + (isShowing ? '' : ' hidden')}>
     <h2>Decoding</h2>
-    <textarea value={binaryString} onChange={e => changeBinaryString(e.target.value)} />
-    {result}
-  </div>
+    <textarea value={binaryString} placeholder='Enter binary code' onChange={e => changeBinaryString(e.target.value)} />
+    <textarea value={result} placeholder='Invalid code' readOnly></textarea>
+  </div>;
 }
 
 const App = () => {
@@ -137,8 +146,10 @@ const App = () => {
 
   return <React.Fragment>
     <h1>Huffman</h1>
-    <button onClick={() => changeIsEncodingState(true)}>Encode</button>
-    <button onClick={() => changeIsEncodingState(false)}>Decode</button>
+    <div>
+      <button onClick={() => changeIsEncodingState(true)}>Encode</button>
+      <button onClick={() => changeIsEncodingState(false)}>Decode</button>
+    </div>
     <EncodeText isShowing={isEncodingState} />
     <DecodeText isShowing={!isEncodingState} />
   </React.Fragment>

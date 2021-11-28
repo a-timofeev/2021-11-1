@@ -166,6 +166,9 @@ const huffmanDecode = (binaryString) => {
     let text = '';
 
     if (typeof codesTree === 'string') {
+        if (content.length - i <= 0) {
+            throw new InvalidCodeError('Invalid code');
+        }
         text = codesTree.repeat(content.length - i);
     }
     else {

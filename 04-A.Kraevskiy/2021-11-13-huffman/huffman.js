@@ -190,6 +190,9 @@ var huffmanDecode = function huffmanDecode(binaryString) {
     var text = '';
 
     if (typeof codesTree === 'string') {
+        if (content.length - i <= 0) {
+            throw new InvalidCodeError('Invalid code');
+        }
         text = codesTree.repeat(content.length - i);
     } else {
         var decoder = function decoder(obj) {

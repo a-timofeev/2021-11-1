@@ -75,35 +75,43 @@ function Frequencies(_ref) {
     React.Fragment,
     null,
     React.createElement(
-      'h3',
+      'details',
       null,
-      '1. Frequencies'
-    ),
-    React.createElement(
-      'table',
-      null,
-      freq_el.length > 0 ? React.createElement(
-        'thead',
+      React.createElement(
+        'summary',
         null,
         React.createElement(
-          'tr',
+          'h4',
+          null,
+          'Frequencies'
+        )
+      ),
+      React.createElement(
+        'table',
+        null,
+        freq_el.length > 0 ? React.createElement(
+          'thead',
           null,
           React.createElement(
-            'td',
+            'tr',
             null,
-            'letter'
-          ),
-          React.createElement(
-            'td',
-            null,
-            'count'
+            React.createElement(
+              'td',
+              null,
+              'letter'
+            ),
+            React.createElement(
+              'td',
+              null,
+              'count'
+            )
           )
+        ) : undefined,
+        React.createElement(
+          'tbody',
+          null,
+          freq_el
         )
-      ) : undefined,
-      React.createElement(
-        'tbody',
-        null,
-        freq_el
       )
     )
   );
@@ -139,35 +147,43 @@ function GeneratedCodes(_ref4) {
     React.Fragment,
     null,
     React.createElement(
-      'h3',
+      'details',
       null,
-      '2. Generated codes'
-    ),
-    React.createElement(
-      'table',
-      null,
-      codes_el.length > 0 ? React.createElement(
-        'thead',
+      React.createElement(
+        'summary',
         null,
         React.createElement(
-          'tr',
+          'h4',
+          null,
+          'Generated codes'
+        )
+      ),
+      React.createElement(
+        'table',
+        null,
+        codes_el.length > 0 ? React.createElement(
+          'thead',
           null,
           React.createElement(
-            'td',
+            'tr',
             null,
-            'letter'
-          ),
-          React.createElement(
-            'td',
-            null,
-            'codes'
+            React.createElement(
+              'td',
+              null,
+              'letter'
+            ),
+            React.createElement(
+              'td',
+              null,
+              'codes'
+            )
           )
+        ) : undefined,
+        React.createElement(
+          'tbody',
+          null,
+          codes_el
         )
-      ) : undefined,
-      React.createElement(
-        'tbody',
-        null,
-        codes_el
       )
     )
   );
@@ -182,7 +198,7 @@ function EncodedText(_ref7) {
     React.createElement(
       'h3',
       null,
-      '3. Encoded text'
+      'Encoded text'
     ),
     React.createElement(
       'p',
@@ -195,45 +211,42 @@ function EncodedText(_ref7) {
 var EncodeText = function EncodeText(_ref8) {
   var isShowing = _ref8.isShowing;
 
-  var _React$useState = React.useState("Lorem"),
+  var _React$useState = React.useState(""),
       _React$useState2 = _slicedToArray(_React$useState, 2),
       text = _React$useState2[0],
       setText = _React$useState2[1];
 
+  var showResult = void 0;
   if (text === '') {
-    return React.createElement(
-      'div',
+    showResult = undefined;
+  } else {
+    var _huffmanEncode = huffmanEncode(text),
+        frequency = _huffmanEncode.frequency,
+        tree = _huffmanEncode.tree,
+        codes = _huffmanEncode.codes,
+        codedTree = _huffmanEncode.codedTree,
+        codedText = _huffmanEncode.codedText,
+        codedTextWithHeader = _huffmanEncode.codedTextWithHeader;
+
+    showResult = React.createElement(
+      React.Fragment,
       null,
-      React.createElement(
-        'h2',
-        null,
-        'Encoding'
-      ),
-      React.createElement(Input, { text: text, setText: setText }),
-      ';'
+      React.createElement(Frequencies, { freq: frequency }),
+      React.createElement(GeneratedCodes, { codes: codes, freq: frequency }),
+      React.createElement(EncodedText, { codedTextWithHeader: codedTextWithHeader })
     );
   }
 
-  var _huffmanEncode = huffmanEncode(text),
-      frequency = _huffmanEncode.frequency,
-      tree = _huffmanEncode.tree,
-      codes = _huffmanEncode.codes,
-      codedTree = _huffmanEncode.codedTree,
-      codedText = _huffmanEncode.codedText,
-      codedTextWithHeader = _huffmanEncode.codedTextWithHeader;
-
   return React.createElement(
     'div',
-    { className: isShowing ? '' : 'hidden' },
+    { className: 'encode ' + (isShowing ? '' : 'hidden') },
     React.createElement(
       'h2',
       null,
       'Encoding'
     ),
     React.createElement(Input, { text: text, setText: setText }),
-    React.createElement(Frequencies, { freq: frequency }),
-    React.createElement(GeneratedCodes, { codes: codes, freq: frequency }),
-    React.createElement(EncodedText, { codedTextWithHeader: codedTextWithHeader })
+    showResult
   );
 };
 
@@ -249,30 +262,26 @@ var DecodeText = function DecodeText(_ref9) {
   var text = void 0;
   try {
     text = huffmanDecode(binaryString);
-    result = React.createElement('textarea', { value: text, readOnly: true });
+    result = text;
   } catch (error) {
-    if (error instanceof Error) {
-      result = React.createElement(
-        'p',
-        null,
-        'Invalid code'
-      );
+    if (error.name === 'InvalidCodeError') {
+      result = '';
     } else {
-      // throw error;
+      throw error;
     }
   }
   return React.createElement(
     'div',
-    { className: isShowing ? '' : 'hidden' },
+    { className: 'decode' + (isShowing ? '' : ' hidden') },
     React.createElement(
       'h2',
       null,
       'Decoding'
     ),
-    React.createElement('textarea', { value: binaryString, onChange: function onChange(e) {
+    React.createElement('textarea', { value: binaryString, placeholder: 'Enter binary code', onChange: function onChange(e) {
         return changeBinaryString(e.target.value);
       } }),
-    result
+    React.createElement('textarea', { value: result, placeholder: 'Invalid code', readOnly: true })
   );
 };
 
@@ -291,18 +300,22 @@ var App = function App() {
       'Huffman'
     ),
     React.createElement(
-      'button',
-      { onClick: function onClick() {
-          return changeIsEncodingState(true);
-        } },
-      'Encode'
-    ),
-    React.createElement(
-      'button',
-      { onClick: function onClick() {
-          return changeIsEncodingState(false);
-        } },
-      'Decode'
+      'div',
+      null,
+      React.createElement(
+        'button',
+        { onClick: function onClick() {
+            return changeIsEncodingState(true);
+          } },
+        'Encode'
+      ),
+      React.createElement(
+        'button',
+        { onClick: function onClick() {
+            return changeIsEncodingState(false);
+          } },
+        'Decode'
+      )
     ),
     React.createElement(EncodeText, { isShowing: isEncodingState }),
     React.createElement(DecodeText, { isShowing: !isEncodingState })
