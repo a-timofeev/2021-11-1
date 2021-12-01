@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>🤔</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+    <!--link rel="stylesheet" href="../shared/style/stylesheet.css"-->
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="root" :class="{secondary: !encodeMode}">
+    <app-header>Алгоритм Хаффмана</app-header>
+    <app-main>
+        <div class="center">
+            <button-group>
+                <ui-button :secondary="!encodeMode" :on-click="switchMode" id="mode-switcher">
+                    <span v-if="encodeMode">Режим Кодирования</span>
+                    <span v-else>Режим Декодирования</span>
+                </ui-button>
+            </button-group>
+        </div>
+    </app-main>
+    <app-footer></app-footer>
+</div>
+
+<script>
+    import("../shared/components/all.js").then(_ => new Vue({
+        el: "#root",
+        data: () => ({
+            encodeMode: true,
+        }),
+        methods: {
+            switchMode() {
+                this.encodeMode = !this.encodeMode
+            },
+        },
+    }))
+</script>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+@import "../shared/style/stylesheet.styl"
+
+
+#root
+    background-color lightness(saturation($primary, 20%), 92%)
+    &.secondary
+        background-color lightness(saturation($secondary, 20%), 92%)
+    & > *
+        shadow(alpha(lightness($primary, 30%), 50%))
+    &.secondary > *
+        shadow(alpha(lightness($secondary, 30%), 50%))
+
+*
+    transition box-shadow 1s, background-color 1s
+
+#mode-switcher
+    transition background-color 1s
+    width: 20em

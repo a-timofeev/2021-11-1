@@ -13,7 +13,7 @@ input:focus,
 button,
 select,
 .button-group {
-  border-radius: 12px;
+  border-radius: 8px;
 }
 .spaced-out {
   margin: 8px;
@@ -28,7 +28,7 @@ footer,
 button,
 select,
 .button-group {
-  box-shadow: 4px 4px 12px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 .glassy-bg,
 header {
@@ -165,7 +165,7 @@ th {
 }
 .rounded,
 .button-group {
-  border-radius: 12px;
+  border-radius: 8px;
 }
 .spaced-out {
   margin: 8px;
@@ -175,7 +175,7 @@ th {
 }
 .shadow,
 .button-group {
-  box-shadow: 4px 4px 12px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 .glassy-bg {
   background-color: rgba(255,255,255,0.75);
@@ -231,4 +231,23 @@ ul.table-of-contents > li > ul {
 }
 .button-group > button:first-child {
   border-left: none;
+}
+#root {
+  background-color: #e7edef;
+}
+#root.secondary {
+  background-color: #efe7e9;
+}
+#root > * {
+  box-shadow: 0 4px 12px rgba(11,122,142,0.5);
+}
+#root.secondary > * {
+  box-shadow: 0 4px 12px rgba(139,14,56,0.5);
+}
+* {
+  transition: box-shadow 1s, background-color 1s;
+}
+#mode-switcher {
+  transition: background-color 1s;
+  width: 20em;
 }

@@ -7,12 +7,13 @@ $primary-dark = #16abc0
 $secondary = #ec407a
 $secondary-light = #ff77a9
 $secondary-dark = #b4004e
+$disabled-color = #dedede
 $text-on-p = #000000
 $text-on-s = #000000
 $text-lighten = #424242
 
-shadow()
-    box-shadow 4px 4px 12px #0006
+shadow(color = #0006)
+    box-shadow 0 4px 12px color
 
 space(n)
     8px * n
