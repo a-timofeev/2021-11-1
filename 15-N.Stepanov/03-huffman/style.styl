@@ -1,14 +1,18 @@
 @import "../shared/style/stylesheet.styl"
 
+$bg-color-primary-based = lightness(saturation($primary, 20%), 92%)
+$bg-color-secondary-based = lightness(saturation($secondary, 20%), 92%)
+$shadow-color-primary = alpha(lightness($primary, 30%), 50%)
+$shadow-color-secondary = alpha(lightness($secondary, 30%), 50%)
 
 #root
-    background-color lightness(saturation($primary, 20%), 92%)
+    background-color $bg-color-primary-based
     &.secondary
-        background-color lightness(saturation($secondary, 20%), 92%)
-    & > *, .shadow
-        shadow(alpha(lightness($primary, 30%), 50%))
-    &.secondary > *, .shadow
-        shadow(alpha(lightness($secondary, 30%), 50%))
+        background-color $bg-color-secondary-based
+    & > *, & .shadow
+        shadow($shadow-color-primary)
+    &.secondary > *, &.secondary .shadow
+        shadow($shadow-color-secondary)
 
 *
     transition box-shadow 1s, background-color 1s

@@ -12,11 +12,18 @@ input,
 input:focus,
 button,
 select,
+textarea,
 .button-group {
   border-radius: 8px;
 }
 .spaced-out {
   margin: 8px;
+}
+.spaced-out2 {
+  margin: 16px;
+}
+.spaced-out3 {
+  margin: 24px;
 }
 .hidden {
   display: none;
@@ -49,6 +56,9 @@ header {
 .secondary {
   background-color: #ec407a;
 }
+.flex {
+  display: flex;
+}
 .grow {
   flex-grow: 1;
 }
@@ -73,7 +83,7 @@ body,
   margin: 0;
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
-  background-color: #eee;
+  background-color: #f0f0f0;
 }
 #root {
   display: flex;
@@ -140,6 +150,15 @@ select:active {
   background-color: #9affff;
   transition: background-color 0s;
 }
+textarea {
+  outline: none;
+  border: none;
+  font-size: 20px;
+  font-family: 'Roboto', sans-serif;
+  width: 100%;
+  background-color: #f0f0f0;
+  padding: 16px;
+}
 a {
   color: #62ddf3;
   text-decoration: none;
@@ -175,6 +194,12 @@ th {
 .spaced-out {
   margin: 8px;
 }
+.spaced-out2 {
+  margin: 16px;
+}
+.spaced-out3 {
+  margin: 24px;
+}
 .hidden {
   display: none;
 }
@@ -199,6 +224,9 @@ th {
 }
 .secondary {
   background-color: #ec407a;
+}
+.flex {
+  display: flex;
 }
 .grow {
   flex-grow: 1;
@@ -227,6 +255,10 @@ ul.table-of-contents > li > ul {
   background-color: #dedede;
   cursor: not-allowed;
 }
+.ui-textarea {
+  resize: vertical;
+  min-height: 200px;
+}
 .button-group {
   overflow: hidden;
   display: flex;
@@ -251,7 +283,7 @@ ul.table-of-contents > li > ul {
   box-shadow: 0 4px 12px rgba(11,122,142,0.5);
 }
 #root.secondary > *,
-#root .shadow {
+#root.secondary .shadow {
   box-shadow: 0 4px 12px rgba(139,14,56,0.5);
 }
 * {
