@@ -5,9 +5,9 @@
     background-color lightness(saturation($primary, 20%), 92%)
     &.secondary
         background-color lightness(saturation($secondary, 20%), 92%)
-    & > *
+    & > *, .shadow
         shadow(alpha(lightness($primary, 30%), 50%))
-    &.secondary > *
+    &.secondary > *, .shadow
         shadow(alpha(lightness($secondary, 30%), 50%))
 
 *

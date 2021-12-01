@@ -49,6 +49,9 @@ header {
 .secondary {
   background-color: #ec407a;
 }
+.grow {
+  flex-grow: 1;
+}
 ul.table-of-contents {
   list-style: "📌";
 }
@@ -98,6 +101,8 @@ main {
   max-width: 95vw;
   padding: 32px;
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
   background-color: #fff;
 }
 main > h2 {
@@ -195,6 +200,9 @@ th {
 .secondary {
   background-color: #ec407a;
 }
+.grow {
+  flex-grow: 1;
+}
 ul.table-of-contents {
   list-style: "📌";
 }
@@ -238,10 +246,12 @@ ul.table-of-contents > li > ul {
 #root.secondary {
   background-color: #efe7e9;
 }
-#root > * {
+#root > *,
+#root .shadow {
   box-shadow: 0 4px 12px rgba(11,122,142,0.5);
 }
-#root.secondary > * {
+#root.secondary > *,
+#root .shadow {
   box-shadow: 0 4px 12px rgba(139,14,56,0.5);
 }
 * {

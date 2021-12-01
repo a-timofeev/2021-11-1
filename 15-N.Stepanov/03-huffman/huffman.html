@@ -14,7 +14,7 @@
 
 <div id="root" :class="{secondary: !encodeMode}">
     <app-header>Алгоритм Хаффмана</app-header>
-    <app-main>
+    <app-main back="..">
         <div class="center">
             <button-group>
                 <ui-button :secondary="!encodeMode" :on-click="switchMode" id="mode-switcher">
