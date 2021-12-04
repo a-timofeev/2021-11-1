@@ -24,16 +24,16 @@
 			<br>б) Найдите AB, если известно, что боковые стороны трапеции равны 14 и 30, а средняя линия трапеции равна 20.
 			<br><img src="geogebra-export-1.svg" class="leftimg"></img><br></p>
 		<hr><h2>Решение:</h2>
-		<p><img src="geogebra-export-2.svg" class="rightimg"></img>а) Пусть CD - средняя линия трапеции. Тогда точка C - середина стороны KL и центр окружности с диаметром KL, а точка D - середина стороны MN и центр окружности с диаметром MN.
+		<p><img src="\geogebra-export-2.svg" class="rightimg"></img>а) Пусть CD - средняя линия трапеции. Тогда точка C - середина стороны KL и центр окружности с диаметром KL, а точка D - середина стороны MN и центр окружности с диаметром MN.
 			<br> CD - отрезок, соединяющий центры окружностей, то есть отрезок CD перпендикулярен отрезку AB и делит его пополам. Следовательно, CD - срединный перпендикуляр к отрезку AB.</p>
 		<p>б) Пусть E — середина отрезка AB. Тогда AE — высота в треугольнике CAD.
-			<br><img src="CD.svg"></img>
+			<br><img src="\CD.svg"></img>
 			<br>Полупериметр треугольника ACD равен
-			<br><br><img src="p.svg" class="formimg"></img>
+			<br><br><img src="\p.svg" class="formimg"></img>
 			<br><br>Пусть S - площадь треугольника ACD, тогда
-			<br><br><img src="S.svg" class="formimg"></img>
+			<br><br><img src="\S.svg" class="formimg"></img>
 			<br><br>Значит,
-			<br><img src="AB.svg" class="formimg"></img>
+			<br><img src="\AB.svg" class="formimg"></img>
 			<br>Ответ: AB = 8,4</p>
 	</body>
 </html>
