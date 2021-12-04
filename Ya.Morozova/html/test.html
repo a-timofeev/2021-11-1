@@ -19,10 +19,10 @@ function factorise(n){
   d = 2;
   while (d * d <= n) {
     while (n % d == 0) {
-	  n /= d;
-	  res.push(d);
-	}
-	d += 1;
+      n /= d;
+      res.push(d);
+    }
+    d += 1;
   }
   if (n != 1) {
     res.push(n);
@@ -40,5 +40,6 @@ function buttonPressed() {
   res.innerText = "Разложение: " + factorise(n);
 }
 </script>  
+<p><a href="C:\прога\html\index.html">Главная</a></p>
 </body>
 </html>
