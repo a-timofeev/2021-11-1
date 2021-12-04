@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Числа Фибоначчи</title>
+<meta charset='utf-8'>
+</head>
+<body>
+<p>
+  Введите номер числа Фибоначчи:
+  <br><input id='i-number' type='text' placeholder='число' value='5'>
+  <br><button onclick='buttonPressed();'>Вывести число</button>
+</p>
+<p id='result'>Здесь будет ответ...
+
+</p>
+<script>
+function fib(n){
+  let res = [1, 1]; 
+  for (let i = 2; i <= n; i++) {
+    res.push(res[i - 2] + res[i - 1]);
+  }
+  return res[n - 1];
+}
+</script>
+
+<script>
+function buttonPressed() {
+  let n = +document.getElementById('i-number').value;
+  console.log(n);
+  
+  let res = document.getElementById('result');
+  res.innerText = "Число Фибоначчи c номером " + n + ": " + fib(n);
+}
+</script>  
+<p><a href="C:\прога\html\index.html">Главная</a></p>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Простые числа</title>
+<meta charset='utf-8'>
+</head>
+<body>
+<p>
+  Введите число, которое хотите проверить на простоту:
+  <br><input id='i-number' type='text' placeholder='число' value='5'>
+  <br><button onclick='buttonPressed();'>Проверить</button>
+</p>
+<p id='result'>Здесь будет ответ...
+
+</p>
+<script>
+function primes(n){
+  let k = 0;
+  for (let i = 2; i <= n / 2 + 1; i++) {
+    if (n % i == 0) {
+	  k += 1;
+	  console.log("i " + i);
+	  console.log("k " + k);
+	}
+  }
+  if (k == 0) {
+    console.log("k1 " + k);
+    return 0;
+	
+  } else {
+    console.log("k2 " + k);
+    return 1;
+	
+  }
+}
+</script>
+
+<script>
+function buttonPressed() {
+  let n = +document.getElementById('i-number').value;
+  console.log(n);
+  
+  let res = document.getElementById('result');
+  if (primes(n) != 1) {
+    res.innerText = "Число " + n + " простое";
+  } else {
+    res.innerText = "Число " + n + " не является простым";
+  }
+}
+</script>  
+<p><a href="C:\прога\html\index.html">Главная</a></p>
+</body>
+</html>
