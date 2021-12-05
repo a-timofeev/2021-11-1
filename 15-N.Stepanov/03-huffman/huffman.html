@@ -9,43 +9,58 @@
     <!--link rel="stylesheet" href="../shared/style/stylesheet.css"-->
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
 
-<div id="root" :class="{secondary: !encodeMode}">
-    <app-header>Алгоритм Хаффмана</app-header>
-    <app-main back="..">
+<div id="root" :class="{secondary: !encodeMode}" class="accent-bg">
+    <app-header class="shadow">Алгоритм Хаффмана</app-header>
+    <app-main class="shadow" back="..">
         <div class="center">
-            <ui-button :secondary="!encodeMode" :on-click="switchMode" id="mode-switcher">
+            <ui-button :secondary="!encodeMode" :on-click="switchMode" id="mode-switcher" class="shadow">
                 <span v-if="encodeMode">Режим Кодирования</span>
                 <span v-else>Режим Декодирования</span>
             </ui-button>
         </div>
         <div class="spaced-out3 flex">
             <ui-textarea
-                id="input-main"
-                class="shadow"
-                dynamic-resize
-                :placeholder="encodeMode ? 'Ваш текст...' : 'Ваш код...'"
+                    id="input-main"
+                    class="shadow accent-bg"
+                    dynamic-resize
+                    @input="updateInput"
+                    ref="textarea"
+                    :placeholder="encodeMode ? 'Ваш текст...' : 'Ваш код...'"
             >
             </ui-textarea>
         </div>
+        <div v-if="encodeMode" class="flex">
+            <decoder :input="input"></decoder>
+        </div>
+        <div v-else>
+
+        </div>
     </app-main>
-    <app-footer></app-footer>
+    <app-footer class="shadow"></app-footer>
 </div>
 
 <script>
-    import("../shared/components/all.js").then(_ => new Vue({
-        el: "#root",
-        data: () => ({
-            encodeMode: true,
-        }),
-        methods: {
-            switchMode() {
-                this.encodeMode = !this.encodeMode
+    import("../shared/components/all.js")
+        .then(() => import("./local-components.js"))
+        .then(_ => new Vue({
+            el: "#root",
+            data: () => ({
+                encodeMode: true,
+                input: "",
+            }),
+            methods: {
+                switchMode() {
+                    this.encodeMode = !this.encodeMode
+                },
+                updateInput(e) {
+                    this.input = e.target.innerText
+                }
             },
-        },
-    })).catch(e => console.error(e))
+        })).catch(e => console.error(e))
 </script>
 
 </body>

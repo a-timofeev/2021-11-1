@@ -22,6 +22,7 @@ export default Vue.component('ui-textarea', {
                 const targetHeight = range.getBoundingClientRect().height + 50
                 e.target.style.height = `${targetHeight}px`
             }
-        }
+            this.$emit("input", e)
+        },
     }
 })

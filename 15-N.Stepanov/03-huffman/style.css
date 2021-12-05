@@ -275,29 +275,31 @@ ul.table-of-contents > li > ul {
 .button-group > button:first-child {
   border-left: none;
 }
-#root {
+#root,
+#root .accent-bg {
   background-color: #e7edef;
+  transition: background-color 0.7s;
 }
-#root.secondary {
+#root.secondary,
+#root.secondary .accent-bg {
   background-color: #efe7e9;
 }
-#root > *,
 #root .shadow {
   box-shadow: 0 4px 12px rgba(11,122,142,0.5);
+  transition: box-shadow 0.7s;
 }
-#root.secondary > *,
 #root.secondary .shadow {
   box-shadow: 0 4px 12px rgba(139,14,56,0.5);
 }
-* {
-  transition: box-shadow 1s, background-color 1s;
-}
-#mode-switcher {
-  transition: background-color 1s;
+#root #mode-switcher {
+  transition: background-color 0.7s;
   width: 20em;
 }
 #input-main {
   max-height: 600px;
   overflow-y: scroll;
   transition: height 0.2s;
+}
+#frequency-chart {
+  --color: #62ddf3;
 }
