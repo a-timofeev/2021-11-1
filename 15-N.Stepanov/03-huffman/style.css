@@ -13,6 +13,7 @@ input:focus,
 button,
 select,
 textarea,
+.ui-textarea,
 .button-group {
   border-radius: 8px;
 }
@@ -150,7 +151,8 @@ select:active {
   background-color: #9affff;
   transition: background-color 0s;
 }
-textarea {
+textarea,
+.ui-textarea {
   outline: none;
   border: none;
   font-size: 20px;
@@ -188,6 +190,7 @@ th {
   margin-right: auto;
 }
 .rounded,
+.ui-textarea,
 .button-group {
   border-radius: 8px;
 }
@@ -292,4 +295,9 @@ ul.table-of-contents > li > ul {
 #mode-switcher {
   transition: background-color 1s;
   width: 20em;
+}
+#input-main {
+  max-height: 600px;
+  overflow-y: scroll;
+  transition: height 0.2s;
 }
