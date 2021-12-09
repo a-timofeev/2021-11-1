@@ -303,3 +303,9 @@ ul.table-of-contents > li > ul {
 #frequency-chart {
   --color: #62ddf3;
 }
+#frequency-chart .tick > text {
+  font-size: 14px;
+}
+#frequency-chart text.title {
+  font-size: 20px;
+}
