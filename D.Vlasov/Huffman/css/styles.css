@@ -1,0 +1,19 @@
+
+textarea.input {
+    width: 500px;
+    height: 100px;
+    resize: none;
+}
+
+textarea.list {
+    width: 100px;
+    height: 150px;
+    resize: none;
+    overflow-y: scroll;
+}
+
+#mynetwork {
+    width: 600px;
+    height: 600px;
+    border: 1px solid lightgray;
+  }

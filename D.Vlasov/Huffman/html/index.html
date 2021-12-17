@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <script src="vis/dist/vis.min.js"></script>
+        <link type="text/css" href="../css/styles.css" rel="stylesheet"/>
+        <titile>
+        </titile>
+    </head>
+
+    <body>
+
+        <h1>Huffman coding</h1>
+
+        <h3>Type your text</h3>
+        <div><textarea class="input" id='input_text'></textarea></div>
+        <input type="button" id="button_input" value="Encode text">
+        <h3>Frequences</h3>
+        <div><textarea class="list" id="output_frequences" readonly></textarea></div>
+        <div id="encoding_result"></div>
+
+        <h3>Generated codes</h3>
+        <div><textarea class="list" id="output_codes" readonly></textarea></div>
+
+        <div id="mynetwork"></div>
+
+        <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+        <script src="../js/huffman.js"></script>
+
+    </body>
+
+</html>
