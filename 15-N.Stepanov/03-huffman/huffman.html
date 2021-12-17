@@ -39,22 +39,27 @@
                 :secondary="!encodeMode"
                 id="frequency-chart"
         >
-
         </frequency-chart>
+
     </app-main>
     <app-footer class="shadow"></app-footer>
 </div>
 
-<script>
+<script type="module">
+    import {buildHuffmanTree} from "./huffman-algorithm.js"
+
     import("../shared/components/all.js")
         .then(() => import("./local-components.js"))
         .then(_ => new Vue({
             el: "#root",
+
             data: () => ({
                 encodeMode: true,
                 input: "",
                 frequencies: [],
+                tree: undefined,
             }),
+
             methods: {
                 switchMode() {
                     this.encodeMode = !this.encodeMode
@@ -75,11 +80,21 @@
                     }
                     this.frequencies = frequencies
                 },
+
+                updateTree(frequencies) {
+                    this.tree = buildHuffmanTree(frequencies)
+                }
             },
+
             watch: {
                 input() {
                     this.updateFrequencies(this.input)
                 },
+
+                frequencies() {
+                    this.updateTree(this.frequencies)
+                    console.log(this.tree)
+                }
             }
         })).catch(e => console.error(e))
 </script>
