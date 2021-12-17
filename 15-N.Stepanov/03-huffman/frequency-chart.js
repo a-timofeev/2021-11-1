@@ -19,8 +19,8 @@ export default Vue.component('frequency-chart', {
     },
 
     methods: {
-        updateChartData(override_frequencies) {
-            const frequencies = override_frequencies ? override_frequencies : [...this.frequencies]
+        updateChartData() {
+            const frequencies = [...this.frequencies]
             frequencies.sort((a, b) => b.frequency - a.frequency)
             frequencies.length = Math.min(frequencies.length, this.maxElements)
             const ys = d3.map(frequencies, d => d.frequency)
@@ -124,8 +124,7 @@ export default Vue.component('frequency-chart', {
 
     watch: {
         frequencies() {
-            this.updateChartData()
-            this.update(this.chartData)
+            this.update()
         },
 
         secondary() {

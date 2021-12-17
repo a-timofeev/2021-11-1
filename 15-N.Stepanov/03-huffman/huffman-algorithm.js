@@ -1,12 +1,11 @@
-class TreeNode {
-    constructor(frequency, character, left, right) {
+export class TreeNode {
+    constructor(frequency, character, zero, one) {
         this.frequency = frequency
         this.character = character
-        this.left = left
-        this.right = right
+        this.zero = zero
+        this.one = one
     }
 }
-
 
 export function buildHuffmanTree(frequencies) {
     const nodes = frequencies.map(f => new TreeNode(f.frequency, f.c, undefined, undefined))

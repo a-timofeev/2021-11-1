@@ -310,3 +310,12 @@ ul.table-of-contents > li > ul {
 #frequency-chart text.title {
   font-size: 20px;
 }
+#huffman-tree-chart {
+  --color: #62ddf3;
+  --color-secondary: #ec407a;
+  --edge-color-secondary: #ff77a9;
+  --edge-color: #ec407a;
+}
+#huffman-tree-chart text {
+  font-size: 30px;
+}

@@ -41,6 +41,15 @@
         >
         </frequency-chart>
 
+        <huffman-tree-chart
+            :tree="this.tree"
+            class="shadow accent-bg rounded spaced-out3"
+            :secondary="!encodeMode"
+            id="huffman-tree-chart"
+        >
+
+        </huffman-tree-chart>
+
     </app-main>
     <app-footer class="shadow"></app-footer>
 </div>
@@ -93,7 +102,6 @@
 
                 frequencies() {
                     this.updateTree(this.frequencies)
-                    console.log(this.tree)
                 }
             }
         })).catch(e => console.error(e))
