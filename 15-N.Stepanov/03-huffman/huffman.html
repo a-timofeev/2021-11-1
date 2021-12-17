@@ -33,12 +33,14 @@
             >
             </ui-textarea>
         </div>
-        <div v-if="encodeMode" class="flex">
-            <decoder :input="input"></decoder>
-        </div>
-        <div v-else>
+        <frequency-chart
+                :frequencies="this.frequencies"
+                class="shadow accent-bg rounded"
+                :secondary="!encodeMode"
+                id="frequency-chart"
+        >
 
-        </div>
+        </frequency-chart>
     </app-main>
     <app-footer class="shadow"></app-footer>
 </div>
@@ -51,15 +53,34 @@
             data: () => ({
                 encodeMode: true,
                 input: "",
+                frequencies: [],
             }),
             methods: {
                 switchMode() {
                     this.encodeMode = !this.encodeMode
                 },
+
                 updateInput(e) {
                     this.input = e.target.innerText
-                }
+                },
+
+                updateFrequencies(input) {
+                    const counter = new Map()
+                    for (const c of input) {
+                        counter[c] = (counter[c] || 0) + 1
+                    }
+                    const frequencies = []
+                    for (let c in counter) {
+                        frequencies.push({c: c, frequency: counter[c]})
+                    }
+                    this.frequencies = frequencies
+                },
             },
+            watch: {
+                input() {
+                    this.updateFrequencies(this.input)
+                },
+            }
         })).catch(e => console.error(e))
 </script>
 

@@ -5,6 +5,7 @@ export default Vue.component('frequency-chart', {
     `,
     props: {
         frequencies: Array,
+        secondary: Boolean,
     },
     data() {
         return {
@@ -18,11 +19,12 @@ export default Vue.component('frequency-chart', {
     },
 
     methods: {
-        updateChartData() {
-            this.frequencies.sort((a, b) => b.frequency - a.frequency)
-            this.frequencies.length = Math.min(this.frequencies.length, this.maxElements)
-            const ys = d3.map(this.frequencies, d => d.frequency)
-            const xs = d3.map(this.frequencies, d => d.c)
+        updateChartData(override_frequencies) {
+            const frequencies = override_frequencies ? override_frequencies : [...this.frequencies]
+            frequencies.sort((a, b) => b.frequency - a.frequency)
+            frequencies.length = Math.min(frequencies.length, this.maxElements)
+            const ys = d3.map(frequencies, d => d.frequency)
+            const xs = d3.map(frequencies, d => d.c)
 
             const xScale = d3.scaleBand(xs, [this.margin, this.width - this.margin])
                 .padding(3).paddingInner(0.05).paddingOuter(0.1)
@@ -30,7 +32,7 @@ export default Vue.component('frequency-chart', {
 
             this.chartData = {
                 svg: d3.select(this.$refs.svg),
-                data: this.frequencies,
+                data: frequencies,
                 xScale: xScale,
                 yScale: yScale,
                 xAxis: d3.axisBottom(xScale),
@@ -51,11 +53,8 @@ export default Vue.component('frequency-chart', {
                 .attr("transform", `translate(${this.margin}, 0)`)
                 .call(yAxis)
 
-            const color = getComputedStyle(this.$refs.svg).getPropertyValue("--color")
-
             const bars = svg
                 .append("g")
-                .attr("fill", color)
 
             svg
                 .append("text")
@@ -71,6 +70,10 @@ export default Vue.component('frequency-chart', {
 
                 const transition = svg.transition().duration(this.transitionDuration)
 
+                const color = getComputedStyle(this.$refs.svg).getPropertyValue(
+                    this.secondary ? "--color-secondary" : "--color"
+                )
+
                 bars.selectAll("rect")
                     .data(data, d => d.c)
                     .join(
@@ -81,6 +84,7 @@ export default Vue.component('frequency-chart', {
                                 .attr("y", yScale(0))
                                 .attr("width", xScale.bandwidth())
                                 .attr("height", 0)
+                                .attr("fill", color)
                                 .transition(transition)
                                 .attr("y", d => yScale(d.frequency))
                                 .attr("height", d => yScale(0) - yScale(d.frequency)),
@@ -90,7 +94,8 @@ export default Vue.component('frequency-chart', {
                                 .attr("x", d => xScale(d.c))
                                 .attr("y", d => yScale(d.frequency))
                                 .attr("width", xScale.bandwidth())
-                                .attr("height", d => yScale(0) - yScale(d.frequency)),
+                                .attr("height", d => yScale(0) - yScale(d.frequency))
+                                .attr("fill", color),
                         exit =>
                             exit
                                 .transition(transition)
@@ -119,7 +124,12 @@ export default Vue.component('frequency-chart', {
 
     watch: {
         frequencies() {
-            this.update()
+            this.updateChartData()
+            this.update(this.chartData)
         },
+
+        secondary() {
+            this.update()
+        }
     },
 })

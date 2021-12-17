@@ -302,6 +302,7 @@ ul.table-of-contents > li > ul {
 }
 #frequency-chart {
   --color: #62ddf3;
+  --color-secondary: #ec407a;
 }
 #frequency-chart .tick > text {
   font-size: 14px;
