@@ -30,7 +30,7 @@ const getTreeFromFrequency = (freq) => {
 		const second = arrayOfNodes.pop();
 		const newNode = { 1: first.node, 0: second.node };
 		const nodeSum = first.nodeSum + second.nodeSum;
-		arrayOfNodes.push({ node: newNode, sum: nodeSum });
+		arrayOfNodes.push({ node: newNode, nodeSum: nodeSum });
 		arrayOfNodes.sort((a, b) => b.nodeSum - a.nodeSum);
 	}
 	const tree = arrayOfNodes[0].node;
@@ -100,12 +100,12 @@ const getCodedText = (text, codes) => {
 };
 
 const getFullCodedString = (codedTree, codedText) => {
-	// первые три символа задают сколько символов отсутствует в коде в конце строки. Это необходимо т.к. код должен быть кратен 8.
-	const prefix_length = 3;
+	// первые три символа задают сколько символов отсутствует в коде в конце строки. Это необходимо т.к. код должен быть кратен 16.
+	const prefix_length = 4;
 	const contentLength = codedTree.length + codedText.length + prefix_length;
-	const endingLength = (8 - (contentLength % 8)) % 8;
+	const endingLength = (16 - (contentLength % 16)) % 16;
 	const fullCode =
-		'0'.repeat(3 - endingLength.toString(2).length) +
+		'0'.repeat(prefix_length - endingLength.toString(2).length) +
 		endingLength.toString(2) +
 		codedTree +
 		codedText +
@@ -150,13 +150,13 @@ class InvalidCodeError extends Error {
 // FIXME
 const huffmanDecode = (binaryString) => {
 	if (
-		binaryString.length % 8 !== 0 || // если длина строки укладывается в байты
+		binaryString.length % 16 !== 0 || // если длина строки укладывается в байты
 		(binaryString.match(/[01]/g) || []).length < binaryString.length // если есть символы кроме 0 и 1
 	)
 		return undefined;
 
-	const endingLength = parseInt(binaryString.slice(0, 3), 2);
-	const content = binaryString.slice(3, binaryString.length - endingLength);
+	const endingLength = parseInt(binaryString.slice(0, 4), 2);
+	const content = binaryString.slice(4, binaryString.length - endingLength);
 
 	let i = 0;
 	let codesTree = {};
