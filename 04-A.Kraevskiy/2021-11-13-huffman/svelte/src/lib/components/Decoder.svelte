@@ -9,7 +9,7 @@
 	let frequency = '';
 	let codes = '';
 	$: {
-		let decodedText = huffmanDecode(inputText);
+		decodedText = huffmanDecode(inputText);
 		if (decodedText === undefined) decodedText = null;
 		else {
 			const result = huffmanEncode(decodedText);
