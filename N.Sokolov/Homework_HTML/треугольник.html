@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Площадь треугольника</title>
+<meta charset='utf-8'>
+</head>
+<body>
+<p>
+  Введи стороны треугольника, падаван:
+  <br><input id='1st' type='text' placeholder='число' value='0'>
+  <br><input id='2nd' type='text' placeholder='число' value='0'>
+  <br><input id='3rd' type='text' placeholder='число' value='0'>
+  <br><button onclick='buttonPressed();'>Я ввел стороны!</button>
+</p>
+<p id='result'>Здесь будет ответ, если введешь стороны ты.
+</p>
+<img src= 'https://i1.wp.com/eroskosmos.org/wp-content/uploads/2014/02/16-Yoda-Empire-star-wars1.jpg?resize=750%2C518'>
+<script>
+function ploshad(a, b, c){
+  let res = 0; 
+  let p = (a + b + c)/2;
+  res = (p*(p-a)*(p-b)*(p-c))**0.5
+  return res;
+}
+</script>
+
+<script>
+function buttonPressed() {
+  let a = +document.getElementById('1st').value;
+  console.log(a);
+  let b = +document.getElementById('2nd').value;
+  console.log(b);
+  let c = +document.getElementById('3rd').value;
+  console.log(c);
+
+  let res = document.getElementById('result');
+  res.innerText = "Площадь твоего треугольника этому значению равна: " + ploshad(a, b, c);
+  
+}
+</script>  
+</body>
+</html>

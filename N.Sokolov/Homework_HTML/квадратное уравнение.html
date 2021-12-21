@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Квадратное уравнение</title>
+<meta charset='utf-8'>
+</head>
+<body>
+<p>
+  Задайте уравнение:
+</p>
+<p>
+  коэффициент при x^2:<input id='st' type='text' placeholder='число' value='0'>
+</p>
+<p>
+  коэффициент при x:<input id='nd' type='text' placeholder='число' value='0'>
+</p>
+<p>
+  свободный член:<input id='rd' type='text' placeholder='число' value='0'>
+  <br><button onclick='buttonPressed();'>Решить уравнение</button>
+</p>
+<p id='result'>ответ будет наверное здесь
+
+</p>
+<script>
+function firstroot(a, b, c){
+  let res = 0; 
+  res = (-b + (b**2 - 4*a*c)**0.5)/(2*a) ;
+  return res;
+}
+</script>
+
+<script>
+function secondroot(a, b, c){
+  let res = 0; 
+  res = (-b - (b**2 - 4*a*c)**0.5)/(2*a) ;
+  return res;
+}
+</script>
+
+<script>
+function buttonPressed() {
+  let a = +document.getElementById('st').value;
+  console.log(a);
+  let b = +document.getElementById('nd').value;
+  console.log(b);
+  let c = +document.getElementById('rd').value;
+  console.log(c);
+
+  let res = document.getElementById('result');
+  if(b**2 - 4*a*c < 0)
+  {
+    res.innerText = "Нет корней!"
+  }
+  else if(b**2 - 4*a*c == 0)
+  {
+    res.innerText = "Один корешок: " + firstroot(a, b, c);
+  }
+  else
+  {
+    res.innerText = "Первый корешок: " + firstroot(a, b, c) + " Второй корешок: " + secondroot(a, b, c);
+  }
+}
+</script>  
+</body>
+</html> 

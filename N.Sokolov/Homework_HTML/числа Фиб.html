@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Числа Фибоначчи</title>
+<meta charset='utf-8'>
+</head>
+<body>
+<p>
+  Номер числа Фибоначчи:
+  <br><input id='i-number' type='text' placeholder='число' value='0'>
+  <br><button onclick='buttonPressed();'>Дай мне число</button>
+</p>
+<p id='result'>Ответ здесь свой жди
+
+</p>
+<p>
+<img src= 'https://i1.wp.com/eroskosmos.org/wp-content/uploads/2014/02/16-Yoda-Empire-star-wars1.jpg?resize=750%2C518'>
+</p>
+<script>
+function solve(n){
+  let arr = [1, 1]; 
+  for (let i = 2; i <= n; i++) {
+    arr.push(arr[i - 2] + arr[i - 1]);
+  }
+  return arr[n - 1];
+}
+</script>
+
+<script>
+function buttonPressed() {
+  let n = +document.getElementById('i-number').value;
+  console.log(n);
+  let res = document.getElementById('result');
+  res.innerText = n + "-ое число Фибоначчи: " + solve(n);
+}
+</script>  
+</body>
+</html>
