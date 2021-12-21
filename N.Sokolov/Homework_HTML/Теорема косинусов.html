@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Теорема косинусов</title>
+<meta charset='utf-8'>
+</head>
+<body>
+
+<p>
+  первая сторона:<input id='st' type='text' placeholder='число' value='0'>
+</p>
+<p>
+  вторая сторона:<input id='nd' type='text' placeholder='число' value='0'>
+</p>
+<p>
+  угол в градусах:<input id='rd' type='text' placeholder='число' value='0'>
+  <br><button onclick='buttonPressed();'>получить третью сторону</button>
+</p>
+<p id='result'>здесь мог бы быть ваш ответ
+
+</p>
+<script>
+function solve(a, b, c){
+  let res = 0; 
+  res = Math.sqrt(a**2 + b**2 - 2*a*b*Math.cos((c/180)*Math.PI));
+  return Math.fround(res);
+}
+</script>
+
+<script>
+function buttonPressed() {
+  let a = +document.getElementById('st').value;
+  console.log(a);
+  let b = +document.getElementById('nd').value;
+  console.log(b);
+  let c = +document.getElementById('rd').value;
+  console.log(c);
+
+  let res = document.getElementById('result');
+  res.innerText = "Третья сторона: " + solve(a, b, c);
+}
+</script>  
+</body>
+</html> 
