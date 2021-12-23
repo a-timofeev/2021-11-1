@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<title> Разложение числа на множители</title>
+	</head>
+	<body>
+		<p> Введите число:
+		<br> <input id='n' type='text'>
+		<br> <button onclick='buttonPressed();'> Вывести </button>
+		</p>
+		
+		<p id='result'> ... </p>
+		
+		<script>
+			function prime(n) {
+				let del = [];
+				for (let i = 2; i * i <= n ; i++) {
+					while (n % i == 0) {
+						del.push(i);
+						n /= i;
+					}
+				}
+				if (n != 1) {
+					del.push(n);
+				}
+				
+				return del;
+			}
+
+			function buttonPressed() {
+				let n = +document.getElementById('n').value;
+				
+				let res = document.getElementById('result')
+				res.innerText = "Разложение: " + prime(n);
+			}
+		</script>
+	</body>
+</html>
