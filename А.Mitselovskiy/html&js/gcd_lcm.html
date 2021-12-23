@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Gcd_lcm</title>
+<meta charset='utf-8'>
+</head>
+<body>
+<p>
+  Input a first number:
+  <br>
+  <input id='input0' type='text'>
+  <br>
+  Input a second number:
+  <br>
+  <input id='input1' type='text'>
+  <br>
+  <button onclick='buttonPressed();'>Print numbers' gcd and lcm</button>
+</p>
+<p id='result'>Numbers:
+
+</p>
+<script>
+function gcd(n, m) {
+  if(m > 0) { 
+    var k = n % m;
+    return gcd(m, k); 
+  } 
+  else { 
+    return Math.abs(n);  
+  }
+}
+function lcm(x,y){
+  return (x / gcd(x,y)|0)*y;
+}
+</script>
+
+<script>
+function buttonPressed() {
+  let n = document.getElementById('input0').value;
+  let m = document.getElementById('input1').value;
+  let res = document.getElementById('result');
+  console.log(1);
+  res.innerText = "Gcd: " + gcd(n, m) + " Lcm: " + lcm(n, m);
+}
+</script>  
+</body>
+</html>

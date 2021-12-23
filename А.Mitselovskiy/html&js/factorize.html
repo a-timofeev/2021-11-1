@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Factorize</title>
+<meta charset='utf-8'>
+</head>
+<body>
+<p>
+  Input a number:
+  <br>
+  <input id='input' type='text'>
+  <br>
+  <button onclick='buttonPressed();'>Let's factorise!</button>
+</p>
+<p id='result'>Result
+
+</p>
+<script>
+function factorise(n){
+  let res = []; 
+  d = 2;
+  while (d * d <= n) {
+    while (n % d == 0) {
+	  n /= d;
+	  res.push(d);
+	}
+	d += 1;
+  }
+  if (n != 1) {
+    res.push(n);
+  }
+  return res;
+}
+</script>
+
+<script>
+function buttonPressed() {
+  let n = document.getElementById('input').value;
+  let res = document.getElementById('result');
+  res.innerText = "Factorised: " + factorise(n);
+}
+</script>  
+</body>
+</html>
