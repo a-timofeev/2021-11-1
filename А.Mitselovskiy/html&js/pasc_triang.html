@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Pascal's triangle</title>
+<meta charset='utf-8'>
+</head>
+<body>
+<p>
+  Input triangle's size:
+  <br>
+  <input id='input0' type='text'>
+  <br>
+  <button onclick='buttonPressed();'>Print current Pascal's triangle</button>
+</p>
+<p id='result'>Numbers:
+
+</p>
+<script>
+function pascalTriangle(row, col) {
+    if (col === 0) {
+        return 1;
+    } else if (row === 0) {
+        return 0;
+    } else {
+        return pascalTriangle(row - 1, col) + pascalTriangle(row - 1, col - 1);
+    }
+}
+function buildTriangle(rows) {
+ let result = []
+ for(let row = 0; row < rows; row++){
+   let rowData = []
+   for(let col = 0; col <= row; col ++){
+     rowData.push(pascalTriangle(row, col))
+   }
+   result.push(rowData)
+   result.push("\n")
+ }
+  return result;
+ }
+</script>
+
+<script>
+function buttonPressed() {
+  let n = document.getElementById('input0').value;
+  let res = document.getElementById('result');
+  console.log(1);
+  res.innerText = buildTriangle(n);
+}
+</script>  
+</body>
+</html>
