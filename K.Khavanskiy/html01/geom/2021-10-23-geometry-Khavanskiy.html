@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Geometry</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<style>
+h1{
+  font-family: "Times New Roman"
+}
+div{
+  font-size: 20px
+}
+</style>
+</head>
+<body>
+<p>Подготовил Хаванский Константин</p>
+<h1>Условие</h1>
+<img src='task.png' alt='		' class='medium'>
+<h1>Пояснительный рисунок №1</h1>
+<img src='pic.png' alt='		' class='medium'>
+<div>
+1)  Углы &ang; DBC и &ang; ADB равны как накрест лежащие. 
+<br>В &Delta; BED равны стороны BE и BD по условию => углы &ang; EBD и &ang; ADB равны как углы при основании.
+<br> В &Delta; BМА &ang; ABM = 90&deg; - &ang; BAC = &ang; CAD (т.к. &ang; BАD - прямоугольный) = &ang; BDA (как углы при диагоналях прямоугольника).
+<br> Таким образом, &ang; DBC, &ang; EBD, &ang; ABM равны &ang; ADB и соответственно равны между собой.
+<br> <b>Доказано.</b>
+<br><br><br><br><br></div>
+<h1>Пояснительный рисунок №2</h1>
+<img src='pic2.png' alt='		' class='medium'>
+<div>
+2)  Рассмотрим &Delta;ALC и &Delta;HJC, где J и L - основания перпендикуляров из точек H и A на (CE) соответственно. 
+<br>Эти треугольники подобны по трем углам(&ang;ALC - общий, &ang;HJC = &ang;ALC = 90&deg;). Тогда HJ и AL относятся как HC и AC, т.е. \(\frac{2}{1}\), т.к. Н - середина диагонали АС.
+<br>Т.о. HJ= \(\frac{AL}{2}\) = \(\frac{S(&Delta;AEC)}{EC}\) из формулы площади &Delta;AEC. 
+<br>\(S(&Delta;AEC) = 1/2 * CD * AE\).
+<br>Из пункта №1 мы знаем, что &ang; DBC = \(\frac{90&deg;}{3}\) = 30&deg;. 
+<br>Т.о. \(CD = BC * tg(&ang; DBC) = 6\sqrt{7}\)
+<br>Также \(&ang;ABE = \frac{90&deg;}{3} = 30&deg;\). 
+<br>Т.о. \(AE = CD * tg(&ang; ABE) = 2\sqrt{21}\).
+<br>\(EC = \sqrt{ED^2 + CD^2}\).  
+<br>\(ED = BC - AE = 4\sqrt{21}\).
+<br> \(EC = \sqrt{16*21 + 36*7} = 14\sqrt{3}\). 
+<br>
+<br>Таким образом, HJ = \(\frac{AE * CD}{2 * EC}\) = \(\frac{42\sqrt{3}}{14\sqrt{3}}\) = 3.
+<br><b>Ответ: </b> &#961;(H; (CE)) = 3.
+<br>
+</body>
+</html>
