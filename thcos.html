@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'>
+</head>
+<body>
+<p>Теорема косинусов</p>
+<p>
+  Длина первой стороны
+  <br>
+  <input id='input1' type='text'>
+  <p>Длина второй стороны
+  <br>
+  <input id='input2' type='text'></p>
+  <p>Величина угла между ними(в радианах)
+  <br>
+  <input id='input3' type='text'></p>
+  <br>
+  <button onclick='buttonPressed();'>Получить длину третьей стороны</button>
+</p>
+<p id='result'>
+Результат:
+
+</p>
+<script type = "text/javascript">
+function thcos(n1, n2, n3){
+  return Math.sqrt(n1**2 + n2**2 - 2*n1*n2*Math.cos(n3));
+}
+</script>
+<script>
+function buttonPressed() {
+  let n1 = document.getElementById('input1').value;
+  let n2 = document.getElementById('input2').value;
+  let n3 = document.getElementById('input3').value;
+  let res = document.getElementById('result');
+  res.innerText = thcos(n1,n2,n3);
+}
+</script>  
+</body>
+</html>
