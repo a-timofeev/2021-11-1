@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'>
+</head>
+<body>
+<p>Площадь треугольника через высоту и основание</p>
+<p>
+  Длина основания
+  <br>
+  <input id='input1' type='text'>
+  <p>Длина высоты
+  <br>
+  <input id='input2' type='text'></p>
+  <br>
+  <button onclick='buttonPressed();'>Найти площадь</button>
+</p>
+<p id='result'>
+Результат:
+
+</p>
+<script type = "text/javascript">
+function square(n1, n2){
+  return 0.5*n1*n2;
+}
+</script>
+<script>
+function buttonPressed() {
+  let n1 = document.getElementById('input1').value;
+  let n2 = document.getElementById('input2').value;
+  let res = document.getElementById('result');
+  res.innerText = square(n1,n2);
+}
+</script>  
+</body>
+</html>

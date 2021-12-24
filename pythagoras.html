@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'>
+</head>
+<body>
+<p>Теорема Пифагора</p>
+<p>
+  Длина первого катета
+  <br>
+  <input id='input1' type='text'>
+  <p>Длина второго катета
+  <br>
+  <input id='input2' type='text'></p>
+  <br>
+  <button onclick='buttonPressed();'>Получить длину гипотенузы</button>
+</p>
+<p id='result'>
+Результат:
+
+</p>
+<script type = "text/javascript">
+function hip(n1, n2){
+  return Math.sqrt(n1**2 + n2**2);
+}
+</script>
+<script>
+function buttonPressed() {
+  let n1 = document.getElementById('input1').value;
+  let n2 = document.getElementById('input2').value;
+  let res = document.getElementById('result');
+  res.innerText = hip(n1,n2);
+}
+</script>  
+</body>
+</html>
