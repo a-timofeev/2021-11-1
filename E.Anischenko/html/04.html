@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+</head>
+
+<body>
+
+	<header>
+		<p align  = "right"> Работа Екатерины Анищенко, 11-1 </p>
+		<hr width="100%" size="2" color="#0000ff" />
+	</header>
+
+
+	<h1> Задача 4 </h1>
+	<h2> Вычисление площади треугольника. </h2>
+
+<!-- --------------------------------------------------------------------------- -->
+
+	<h3> а) По трем сторонам. </h3>
+
+	<div>
+		<form name="triangle1" action="javascript:area_1()">
+			Длина первой стороны <input name="triangle_a" type="Number">
+			Длина второй стороны <input name="triangle_b" type="Number">
+			Длина третьей стороны <input name="triangle_c" type="Number">
+			<input type="submit" value="Вычислить">
+		</form>
+		Ответ: <span id="041">Введите длины и нажмите "Вычислить"</span>
+	</div>
+	
+	<script language="javascript">
+		function area_1() {
+			var a = document.triangle1.triangle_a.value;
+			var b = document.triangle1.triangle_b.value;
+			var c = document.triangle1.triangle_c.value;
+			var sol = document.getElementById("041");
+
+			a *= 1;
+			b *= 1;
+			c *= 1;			
+
+			var p  = (a + b + c) / 2;
+			sol.innerHTML = Math.sqrt(p * (p-a) * (p-b) * (p-c));
+		}
+    </script>
+
+<!-- --------------------------------------------------------------------------- -->
+
+<h3> b) По двум сторонам и углу между ними. </h3>
+
+	<div>
+		<form name="triangle2" action="javascript:area_2()">
+			Длина первой стороны <input name="triangle_a" type="text">
+			Длина второй стороны <input name="triangle_b" type="text">
+			Угол между ними (в радианах) <input name="triangle_alpha" type="text">
+			<input type="submit" value="Вычислить">
+		</form>
+		Ответ: <span id="042">Введите длины и угол и нажмите "Вычислить"</span>
+	</div>
+
+	<script language="javascript">
+		function area_2() {
+			var a = document.triangle2.triangle_a.value;
+			var b = document.triangle2.triangle_b.value;
+			var alpha = document.triangle2.triangle_alpha.value;
+			var sol = document.getElementById("042");
+
+			a *= 1;
+			b *= 1;
+			alpha *= 1;
+
+			sol.innerHTML = 0.5 * a * b * Math.sin(alpha);
+		}
+    </script> 
+	
+<!-- --------------------------------------------------------------------------- -->	
+
+<h3> b) По двум углам и стороне между ними. </h3>
+
+	<div>
+		<form name="triangle3" action="javascript:area_3()">
+			Величина первого угла (в радианах) <input name="triangle_alpha" type="text">
+			Величина второго угла (в радианах) <input name="triangle_beta" type="text">
+			Длина стороны между ними <input name="triangle_a" type="text">
+			<input type="submit" value="Вычислить">
+		</form>
+		Ответ: <span id="043">Введите длины и угол и нажмите "Вычислить"</span>
+	</div>
+
+	<script language="javascript">
+		function area_3() {
+			var alpha = document.triangle3.triangle_alpha.value;
+			var beta = document.triangle3.triangle_beta.value;
+			var a = document.triangle3.triangle_a.value;
+			var sol = document.getElementById("043");
+
+			aplha *= 1;
+			beta *= 1;
+			a *= 1;
+
+			sol.innerHTML = a * a / 2 * Math.sin(alpha) * Math.sin(beta)/ Math.sin(Math.PI - (alpha + beta));
+		}
+    </script> 
+
+	<footer>
+		<hr width="100%" size="2" color="#0000ff" />
+		<p><a href="03.html">Предыдущая залача</a></p>
+		<p><a href="05.html">Следующая залача</a></p>
+	</footer>
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+    <script language="javascript">
+	function square_equation() {
+		var a = document.square.square_a.value;
+		var b = document.square.square_b.value;
+		var c = document.square.square_c.value;
+		var sol = document.getElementById("01");
+
+		var d = b*b - 4*a*c;
+		if ( d < 0 ) {
+			res = "Вещественных корней нет";
+		} else {
+			if ( d == 0 ) {
+				res = "x<sub>1</sub> = x<sub>2</sub> = ";
+				res += -b / ( 2 * a );
+		} else {
+			res = "x<sub>1</sub> = " + -b / ( 2 * a ) - Math.sqrt( d ) / ( 2 * a );
+			res += ", x<sub>2</sub> = " + -b / ( 2 * a ) + Math.sqrt( d ) / ( 2 * a );
+		  }
+		}
+		sol.innerHTML = res;
+	}
+    </script>
+</head>
+<body>
+
+	<header>
+		<p align  = "right"> Работа Екатерины Анищенко, 11-1 </p>
+		<hr width="100%" size="2" color="#0000ff" />
+	</header>
+
+
+	<h1> Задача 1 </h1>
+	<h2> Решение квадратного уравнения a&middot;x&sup2; + b&middot;x + c = 0 </h2>
+
+	<div>
+		<form name="square" action="javascript:square_equation()">
+			a <input name="square_a" type="text">
+			b <input name="square_b" type="text">
+			c <input name="square_c" type="text">
+			<input type="submit" value="Вычислить">
+		</form>
+		Ответ: <span id="01">Введите коэффициенты и нажмите "Вычислить"</span>
+	</div>
+	
+	<footer>
+		<hr width="100%" size="2" color="#0000ff" />
+		<p><a href="02.html">Следующая залача</a></p>
+	</footer>	
+</body>
+</html>
