@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel='shortcut icon' href='/favicon.gif' type='image/gif'>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<style>
+img.medium {
+  width: 10cm;
+}
+
+
+h1, h2, h3 {
+  font-family: "Comic Sans MS"
+}
+
+h2 span.emph {
+  color: red;
+  font-style: italic;
+  font-family: Arial;
+}
+</style>
+</head>
+<body>
+<h1>Решение задачи № 5</h1>
+<p>
+Подготовила Морозова Яна
+</p>
+<h2>Условие</h2>
+<div>
+Окружность, вписанная в ромб ABCD , касается сторон CD и BC в точках M и Q соответственно. Прямые AM и BC пересекаются в точке P.
+</div>
+<div>
+а) Докажите, что \(BP*BQ = BC^2\).
+</div>
+<div>
+б) Найдите угол APC, если \(DM=4\) и \(MC=9\).
+
+
+</div>
+<h2>Решение пункта а)</h2>
+<div>
+ Обозначим \(DM=BQ=x\), \(CM=y\). Треугольники CMP и DMA подобны с коэффициентом подобия \( \frac{y}{x} \), поэтому
+</div>
+<div>
+
+\[CP=\frac{y}{x}AD=\frac{y(x+y)}{x}\]
+
+Тогда
+
+\[BP=BC+CP=x+y+\frac{y(x+y)}{x}=(x+y)(1+\frac{y}{x})=\frac{(x+y)^2}{x}=\frac{BC^2}{BQ}\]
+
+Следовательно, \(BP*BQ=BC^2\).
+</div>
+<img src="geogebra.svg">
+<h2>Решение пункта б)</h2>
+<div>
+Пусть O— центр окружности радиуса r, вписанной в ромб. Тогда OM— высота прямоугольного треугольника COD, проведённая из вершины прямого угла, поэтому
+
+\[r=OM=\sqrt{DM*MC}=\sqrt{4*9}=6\]
+
+Значит, высота ромба равна \(2r=12\).
+
+Пусть H — основание перпендикуляра, опущенного из вершины A на прямую BC . Тогда AH — высота ромба, поэтому
+
+\[AH=2r=12; BH=\sqrt{AB^2-AH^2}=\sqrt{13^2-12^2}=5\]
+
+Из подобия треугольников CMP и DMA находим, что
+
+\[CP=\frac{CM}{MD}AD=\frac{9}{4}13=\frac{117}{4}\]
+
+Значит,
+
+\[PH=CP+BC+BH=\frac{117}{4}+13+5=\frac{189}{4}\]
+
+Из прямоугольного треугольника AHP находим, что
+
+\[tgAPH=\frac{AH}{PH}=\frac{16}{63}\]
+
+Следовательно, угол APC равен углу APH = arctg \(\frac{16}{63}\)
+</div>
+<div>
+Ответ: \(arctg\frac{16}{63}\)
+</div>
+</body>
+</html>
