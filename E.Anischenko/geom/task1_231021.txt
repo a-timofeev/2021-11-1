@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel='shortcut icon' href='/favicon.gif' type='image/gif'>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<style>
+img.medium {
+  width: 10cm;
+}
+p {
+  border: solid 5px #db5e9a;
+}
+
+h1, h2, h3 {
+  font-family: "Comic Sans MS"
+}
+
+h2 span.emph {
+  color: red;
+  font-style: italic;
+  font-family: Arial;
+}
+</style>
+</head>
+<body>
+<h1>Решение задачи № 1392487532</h1>
+<p>
+Подготовил Антон Тимофеев
+</p>
+<h2>Условие</h2>
+<p>
+<img src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/%D0%A2%D1%80%D0%B5%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA_%D0%9F%D0%B0%D1%81%D0%BA%D0%B0%D0%BB%D1%8F.svg/1280px-%D0%A2%D1%80%D0%B5%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA_%D0%9F%D0%B0%D1%81%D0%BA%D0%B0%D0%BB%D1%8F.svg.png' alt='		' class='medium'>
+</p>
+<h2>Решение <span class='emph'>пункта</span> а)</h2>
+<div>
+Привет, это формула прямо в строке: \(c^2 = a^2 + b^2\)
+<br>А эта формула "display style": \[c^2 = a^2 + b^2\]
+\[ \sum_{k = 0}^{n-1} \left( \frac{1}{1 + \frac{1}{x}} + 1\right) \]
+\[
+\sum_{k = 0}^{n} \Big(
+\begin{aligned}
+n \\ k
+\end{aligned} \Big) \cdot a^k b^{n-k}
+= \sum_{k = 0}^{n} C_n^k a^k b^{n-k}
+\]
+</div>
+<h2>Решение пункта б)</h2>
+</body>
+</html>

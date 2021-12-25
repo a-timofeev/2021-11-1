@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+    <script language="javascript">
+	function sin() {
+		var x = document.sine.sine_x.value;
+		var sol = document.getElementById("05");
+
+		x *= 1;
+		x %= 2 * Math.PI;
+		var fact = 1;
+		var x_deg = x;
+		var res = 0;
+
+		for (var i = 1; i < 500; i += 2) {
+			res += x_deg/fact;
+			x_deg *= x * x;
+			fact *= (-1) * (i+1) * (i+2);
+		}
+
+		sol.innerHTML = "<br>" + res + "<br>Правильный ответ:<br>" + Math.sin(x);
+	}
+    </script>
+</head>
+<body>
+
+	<header>
+		<p align  = "right"> Работа Екатерины Анищенко, 11-1 </p>
+		<hr width="100%" size="2" color="#0000ff" />
+	</header>
+
+
+	<h1> Задача 5 </h1>
+	<h2> Вычисление sin(x) </h2>
+
+	<div>
+		<form name="sine" action="javascript:sin()">
+			x <input name="sine_x" type="text">
+  			<input type="submit" value="Вычислить">
+		</form>
+		Ответ: <span id="05"> Введите x и нажмите "Вычислить"</span>
+	</div>
+	
+	<footer>
+		<hr width="100%" size="2" color="#0000ff" />
+		<p><a href="04.html">Предыдущая залача</a></p>
+	</footer>
+</body>
+</html>
