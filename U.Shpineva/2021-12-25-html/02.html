@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		
+	</head>
+	<body>
+		<h1>Задача №2</h1>
+		<p>Введите 3 числа (коэффиценты уравнения):
+		<br><input id='input-number' type='text'  placeholder='a'>
+		<br><input id='input-number2' type='text' placeholder='b'>
+		<br><input id='input-number3' type='text' placeholder='c'>
+		<br><button onclick="buttonPressed();">Найти корни</button>
+		</p>
+		<p id='result'></p>
+		<script>
+		function roots(a, b, c) {
+			let res = [];
+			d = 0;
+			k = 0;
+			if ((b ** 2 - 4 * a * c) < 0) {
+				res.push("Корней нет");
+			}
+			else if ((b ** 2 - 4 * a * c) == 0) {
+				d = -b / (2 * a);
+				res.push(d);
+			}
+			else {
+				d = (-b - Math.pow(b ** 2 - 4 * a * c, 1/2)) / (2 * a);
+				res.push(d);
+				k = (-b + Math.pow(b ** 2 - 4 * a * c, 1/2)) / (2 * a);
+				res.push(k);
+			}
+			return res;
+		}
+		
+		function buttonPressed() {
+			let a = +document.getElementById('input-number').value;
+			console.log(a + 1);
+			let b = +document.getElementById('input-number2').value;
+			console.log(b + 1);
+			let c = +document.getElementById('input-number3').value;
+			console.log(c + 1);
+			let res = document.getElementById('result');
+			res.innerText = "Корни: " + roots(a, b, c);
+		}
+		</script>
+	</body>
+</html>

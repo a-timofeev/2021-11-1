@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		
+	</head>
+	<body>
+		<h1>Задача №5</h1>
+		<p>Введите число:
+		<br><input id='input-number' type='text'>
+		<br><button onclick="buttonPressed();">Проверить</button>
+		</p>
+		<p id='result'></p>
+		<script>
+		function factorise(n) {
+			for (d = 2;  d * d <= n; d++) {
+				if (n % d != 0) {
+					continue;
+				}
+				else {
+					return n + " не простое число";
+					break;
+				}
+			}
+			return n + " простое число";
+		}
+		function buttonPressed() {
+			let n = +document.getElementById('input-number').value;
+			console.log(n + 1);
+			let res = document.getElementById('result');
+			res.innerText = factorise(n);
+		}
+		</script>
+	</body>
+</html>
