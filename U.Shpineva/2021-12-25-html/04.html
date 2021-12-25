@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<style>
+		</style>
+	</head>
+	<body>
+		<h1>Задача №4</h1>
+		<p>Введите число:
+		<br><input id='input-number' type='text'>
+		<br><button onclick="buttonPressed();">Вывести таблицу</button>
+		</p>
+		<script>
+		function tab(n) {
+			document.write("<table>");
+			document.write("<tr><td> </td>"); 
+			for (i = 1; i <= n; i++) {
+				document.write("<td>" + i + " </td>");
+			}
+			document.write("</tr>"); 
+			for (i = 1; i <= n; i++) { 
+				document.write("<tr><td>" + i + " </td>"); 
+				for (j = 1; j <= n; j++) { 
+					document.write("<td bgcolor='#00ffa0'>" + (i * j) + " </td>");
+				}
+				document.write("</tr>");
+			}
+			document.write("</table>");
+		}
+		function buttonPressed() {
+			let n = +document.getElementById('input-number').value;
+			console.log(n + 1);
+			tab(n);
+		}
+		</script>
+	</body>
+</html>
