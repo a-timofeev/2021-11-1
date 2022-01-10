@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title> GCD ; LCM </title>
+    <style>
+      #gcd1 {
+        color:red;
+      }
+      #lcm1 {
+        color:red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Find GCD and LCM of your numbers!</h1>
+    <script>
+      function result_function() {
+        var a = Number(document.getElementById("a").value);
+        var b = Number(document.getElementById("b").value);
+        document.getElementById("gcd1").innerHTML = "Greatest Common Divider:";
+        document.getElementById("gcd2").innerHTML = gcd(a, b);
+        document.getElementById("lcm1").innerHTML = "Least Common Multiple:";
+        document.getElementById("lcm2").innerHTML = lcm(a, b);
+      }
+      function gcd(a, b) {
+        if (b > a) {
+          return gcd(b, a);
+        }
+        else if (b == 0) {
+          return a;
+        }
+        return gcd(b, a % b);
+      }
+      function lcm(a, b){
+        var reslcm = (a * b) / (gcd(a, b));
+        return reslcm;
+      }
+
+    </script>
+    a = <input placeholder="type number a" id="a"><br>
+    b = <input placeholder="type number b" id="b"><br>
+    <button onclick="result_function()">Calculate!</button><br>
+    <p id="gcd1">Your result will be here soon!</p>
+    <p id="gcd2"></p>
+    <p id="lcm1"></p>
+    <p id="lcm2"></p>
+  </body>
+</html>

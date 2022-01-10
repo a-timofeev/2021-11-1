@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>triangle</title>
+    <style>
+      body {
+        background-image: url("https://lh3.googleusercontent.com/ogq8nbBdbstucVyd0S9ZHt3byjkwg5fFU8fVuRlg_LKlLumaG9waWfNJxLLZCeb6LnPpzotM2r_zmeMFI6ZxU0Cz3vD2joSZzxk300gYw3O0Xy2SjZ53gMDUsLj9mdZvgY_9x8gE");
+        color:red;
+      }
+      div {
+        background-color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      function area() {
+        var a = Number(document.getElementById("a").value);
+        var b = Number(document.getElementById("b").value);
+        var c = Number(document.getElementById("c").value);
+        let p = (a + b + c) / 2;
+        let area = (p * (p - a) * (p - b) * (p - c)) ** 0.5;
+        return area;
+      }
+      function result_function() {
+        var a = Number(document.getElementById("a").value);
+        var b = Number(document.getElementById("b").value);
+        var c = Number(document.getElementById("c").value);
+        if ((a >= b + c) || (b >= a + c) || (c >= b + a)) {
+          document.getElementById("result").innerHTML = "No such triangle";
+          document.getElementById("area").innerHTML = "";
+        }
+        else if (isNaN(area()) == true) {
+          document.getElementById("result").innerHTML = "Something went wrong";
+          document.getElementById("area").innerHTML = "";
+        }
+        else if (isNaN(area()) == false) {
+          document.getElementById("result").innerHTML = "Triangle area:";
+          document.getElementById("area").innerHTML = area();
+        }
+      }
+    </script>
+    <div>
+      <h1>Find your area!</h1>
+      <h3>Type sides' lengths:</h3>
+      <p>
+          a = <input placeholder="type number a" id="a"><br>
+          b = <input placeholder="type number a" id="b"><br>
+          c = <input placeholder="type number a" id="c"><br>
+          </p>
+      <button onclick="result_function()">Calculate!</button><br><br>
+      <p id="result"> Here will be your result soon! </p>
+      <p id="area"> </p>
+    </div>
+  </body>
+</html>
