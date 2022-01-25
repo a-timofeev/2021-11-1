@@ -320,11 +320,14 @@ ul.table-of-contents > li > ul {
   font-size: 30px;
 }
 #algorithm-result {
-  padding: 16px;
   overflow-wrap: break-word;
   word-break: break-all;
 }
 #algorithm-result #algorithm-result-content {
+  padding: 16px;
   max-height: 400px;
   overflow-y: scroll;
+}
+#algorithm-result .copy-buttons {
+  padding: 16px;
 }

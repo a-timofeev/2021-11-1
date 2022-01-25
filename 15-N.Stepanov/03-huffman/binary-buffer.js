@@ -105,7 +105,6 @@ export default class BinaryBuffer {
     toBin() {
         this.shrinkToFit()
         // noinspection JSCheckFunctionSignatures
-        console.log(this)
         return Array.from(this.#buffer).map(
             chunk => chunk.toString(2).padStart(BinaryBuffer.#BITS_PER_CHUNK, "0")
         ).join("")

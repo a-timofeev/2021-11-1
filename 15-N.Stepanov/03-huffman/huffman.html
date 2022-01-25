@@ -32,16 +32,17 @@
                     dynamic-resize
                     @input="updateInput"
                     ref="textarea"
-                    :placeholder="encodeMode ? 'Ваш текст...' : 'Ваш код...'"
             >
             </ui-textarea>
         </div>
 
         <div class="spaced-out3 shadow accent-bg rounded" id="algorithm-result">
             <div id="algorithm-result-content">
-                {{this.encodedBuffer?.toHex()}}
+                <div>
+                    {{this.encodedBuffer?.toHex()}}
+                </div>
             </div>
-            <div class="center spaced-out2">
+            <div class="center spaced-out2 copy-buttons">
                 <button-group>
                     <ui-button :on-click="() => this.copyResult('bin')">Скопировать Binary</ui-button>
                     <ui-button :on-click="() => this.copyResult('hex')">Скопировать Hex</ui-button>
