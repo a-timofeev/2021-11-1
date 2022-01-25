@@ -17,3 +17,20 @@ export function buildHuffmanTree(frequencies) {
     }
     return nodes[0]
 }
+
+export function dictionaryFromTree(tree) {
+    const result = {}
+
+    const walk = (node, path, size) => {
+        if (node === undefined) return
+        if (node.character !== undefined) {
+            result[node.character] = {binary: path, size: size}
+        } else {
+            walk(node.zero, (path << 1), size + 1)
+            walk(node.one, (path << 1) | 1, size + 1)
+        }
+    }
+
+    walk(tree, 0, 0)
+    return result
+}

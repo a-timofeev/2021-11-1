@@ -15,13 +15,16 @@
 
 <div id="root" :class="{secondary: !encodeMode}" class="accent-bg">
     <app-header class="shadow">Алгоритм Хаффмана</app-header>
+
     <app-main class="shadow" back="..">
+
         <div class="center">
             <ui-button :secondary="!encodeMode" :on-click="switchMode" id="mode-switcher" class="shadow">
                 <span v-if="encodeMode">Режим Кодирования</span>
                 <span v-else>Режим Декодирования</span>
             </ui-button>
         </div>
+
         <div class="spaced-out3 flex">
             <ui-textarea
                     id="input-main"
@@ -33,6 +36,20 @@
             >
             </ui-textarea>
         </div>
+
+        <div class="spaced-out3 shadow accent-bg rounded" id="algorithm-result">
+            <div id="algorithm-result-content">
+                {{this.encodedBuffer?.toHex()}}
+            </div>
+            <div class="center spaced-out2">
+                <button-group>
+                    <ui-button :on-click="() => this.copyResult('bin')">Скопировать Binary</ui-button>
+                    <ui-button :on-click="() => this.copyResult('hex')">Скопировать Hex</ui-button>
+                    <ui-button :on-click="() => this.copyResult('base64')">Скопировать Base64</ui-button>
+                </button-group>
+            </div>
+        </div>
+
         <frequency-chart
                 :frequencies="this.frequencies"
                 class="shadow accent-bg rounded"
@@ -42,10 +59,10 @@
         </frequency-chart>
 
         <huffman-tree-chart
-            :tree="this.tree"
-            class="shadow accent-bg rounded spaced-out3"
-            :secondary="!encodeMode"
-            id="huffman-tree-chart"
+                :tree="this.tree"
+                class="shadow accent-bg rounded spaced-out3"
+                :secondary="!encodeMode"
+                id="huffman-tree-chart"
         >
 
         </huffman-tree-chart>
@@ -55,7 +72,9 @@
 </div>
 
 <script type="module">
-    import {buildHuffmanTree} from "./huffman-algorithm.js"
+    import {buildHuffmanTree, dictionaryFromTree} from "./huffman-algorithm.js"
+    import BinaryBuffer from "./binary-buffer.js"
+    import {copyToClipboard} from "./clipboard.js"
 
     import("../shared/components/all.js")
         .then(() => import("./local-components.js"))
@@ -67,6 +86,7 @@
                 input: "",
                 frequencies: [],
                 tree: undefined,
+                encodedBuffer: undefined,
             }),
 
             methods: {
@@ -79,7 +99,7 @@
                 },
 
                 updateFrequencies(input) {
-                    const counter = new Map()
+                    const counter = {}
                     for (const c of input) {
                         counter[c] = (counter[c] || 0) + 1
                     }
@@ -92,7 +112,52 @@
 
                 updateTree(frequencies) {
                     this.tree = buildHuffmanTree(frequencies)
+                },
+
+                encode(tree, input, frequencies) {
+                    const buffer = new BinaryBuffer()
+
+                    buffer.pushBinary(0x25485546, 32)  // stands for %HUFF
+                    buffer.pushInt(1)  // Version
+                    buffer.pushInt(frequencies.length)
+
+                    for (const {c, frequency} of frequencies) {
+                        buffer.pushChar(c)
+                        buffer.pushInt(frequency)
+                    }
+
+                    buffer.pushInt(input.length)
+
+                    const dict = dictionaryFromTree(tree)
+
+                    for (const c of input) {
+                        buffer.pushBinary(dict[c].binary, dict[c].size)
+                    }
+
+                    this.encodedBuffer = buffer
+                },
+
+                copyResult(type) {
+                    const callback = ({success, error}) => {
+                        console.log(success, error)
+                    }
+
+                    if (type === "text") {
+                        copyToClipboard(this.input, callback)
+                    } else if (type === "bin") {
+                        copyToClipboard(this.encodedBuffer.toBin(), callback)
+                    } else if (type === "hex") {
+                        copyToClipboard(this.encodedBuffer.toHex(), callback)
+                    } else if (type === "base64") {
+                        copyToClipboard(this.encodedBuffer.toBase64(), callback)
+                    } else {
+                        console.error(`Unknown result type: ${type}`)
+                    }
                 }
+            },
+
+            created() {
+                this.encode(undefined, "", "")
             },
 
             watch: {
@@ -102,7 +167,11 @@
 
                 frequencies() {
                     this.updateTree(this.frequencies)
-                }
+                },
+
+                tree() {
+                    this.encode(this.tree, this.input, this.frequencies)
+                },
             }
         })).catch(e => console.error(e))
 </script>
