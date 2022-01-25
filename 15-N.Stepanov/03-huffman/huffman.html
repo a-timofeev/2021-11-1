@@ -68,6 +68,8 @@
 
         </huffman-tree-chart>
 
+        <ui-snackbar ref="snackbar"></ui-snackbar>
+
     </app-main>
     <app-footer class="shadow"></app-footer>
 </div>
@@ -140,6 +142,13 @@
 
                 copyResult(type) {
                     const callback = ({success, error}) => {
+                        if (success) {
+                            this.$refs.snackbar.appear("📌 Скоп ировано!")
+                        } else if (error === "unsupported") {
+                            this.$refs.snackbar.appear("🤔 Браузер не поддерживает копирование, извините 😢")
+                        } else {
+                            this.$refs.snackbar.appear(`😲 Ошибка: ${error}`)
+                        }
                         console.log(success, error)
                     }
 

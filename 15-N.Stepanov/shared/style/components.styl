@@ -26,3 +26,22 @@
         border-left #0008 solid 1px
         &:first-child
             border-left none
+
+.ui-snackbar
+    position fixed
+    bottom space(2)
+    left space(2)
+
+    & .snackbar-content
+        padding space(2)
+        width 420px
+        transform scale(0.5)
+        opacity 0
+        transition transform 0.25s ease-in-out, opacity 0.125s ease-in-out
+        transition-delay 0s, 0.125s
+        background-color $primary-light
+        shadow()
+
+        &.visible
+            transform scale(1)
+            opacity 1

@@ -275,6 +275,25 @@ ul.table-of-contents > li > ul {
 .button-group > button:first-child {
   border-left: none;
 }
+.ui-snackbar {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+}
+.ui-snackbar .snackbar-content {
+  padding: 16px;
+  width: 420px;
+  transform: scale(0.5);
+  opacity: 0;
+  transition: transform 0.25s ease-in-out, opacity 0.125s ease-in-out;
+  transition-delay: 0s, 0.125s;
+  background-color: #9affff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+.ui-snackbar .snackbar-content.visible {
+  transform: scale(1);
+  opacity: 1;
+}
 #root,
 #root .accent-bg {
   background-color: #e7edef;
