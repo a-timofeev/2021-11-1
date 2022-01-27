@@ -5,6 +5,7 @@ export default Vue.component('ui-textarea', {
         autofocus 
         @input="onInput"
         contenteditable
+        ref="textarea"
     >
 
     </span>
@@ -23,6 +24,10 @@ export default Vue.component('ui-textarea', {
                 e.target.style.height = `${targetHeight}px`
             }
             this.$emit("input", e)
+        },
+
+        setContent(string) {
+            this.$refs.textarea.innerText = string
         },
     }
 })

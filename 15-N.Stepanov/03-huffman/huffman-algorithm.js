@@ -1,3 +1,5 @@
+import BinaryBuffer from "./binary-buffer.js"
+
 export class TreeNode {
     constructor(frequency, character, zero, one) {
         this.frequency = frequency
@@ -33,4 +35,56 @@ export function dictionaryFromTree(tree) {
 
     walk(tree, 0, 0)
     return result
+}
+
+
+const formatCode = 0x25485546
+
+export function computeFrequencies(input) {
+    const counter = {}
+    for (const c of input) {
+        counter[c] = (counter[c] || 0) + 1
+    }
+
+    const frequencies = []
+    for (let c in counter) {
+        frequencies.push({c: c, frequency: counter[c]})
+    }
+
+    return frequencies
+}
+
+export function encodeUsingTree(input, frequencies, tree) {
+    const buffer = new BinaryBuffer()
+
+    buffer.pushInt(formatCode)  // stands for %HUF
+    buffer.pushInt(1)  // Version
+    buffer.pushInt(frequencies.length)
+
+    for (const {c, frequency} of frequencies) {
+        buffer.pushChar(c)
+        buffer.pushInt(frequency)
+    }
+
+    buffer.pushInt(input.length)
+
+    const dict = dictionaryFromTree(tree)
+
+    for (const c of input) {
+        buffer.pushBinary(dict[c].binary, dict[c].size)
+    }
+
+    return buffer
+}
+
+export function encode(input) {
+    const frequencies = computeFrequencies(input)
+    const tree = buildHuffmanTree(frequencies)
+    const buffer = encodeUsingTree(input, frequencies, tree)
+
+    return {
+        frequencies: frequencies,
+        tree: tree,
+        result: buffer,
+    }
 }

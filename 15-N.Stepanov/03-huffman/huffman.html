@@ -96,12 +96,10 @@
 </div>
 
 <script type="module">
-    import {buildHuffmanTree, dictionaryFromTree} from "./huffman-algorithm.js"
+    import {buildHuffmanTree, dictionaryFromTree, encode} from "./huffman-algorithm.js"
     import BinaryBuffer from "./binary-buffer.js"
     import BinaryScanner from "./binary-scanner.js"
     import {copyToClipboard} from "./clipboard.js"
-
-    const formatCode = 0x25485546
 
     import("../shared/components/all.js")
         .then(() => import("./local-components.js"))
@@ -111,85 +109,35 @@
             data: () => ({
                 encodeMode: true,
                 input: "",
+
                 frequencies: [],
                 tree: undefined,
                 encodedBuffer: undefined,
+
                 binaryInputScanner: undefined,
                 errorDescription: undefined,
+
                 snackbarType: "success",
             }),
 
             methods: {
                 switchMode() {
                     this.encodeMode = !this.encodeMode
-                    // if (this.encodeMode) {
-                    //     this.binaryInputScanner = undefined
-                    // } else {
-                    //     this.encodedBuffer = undefined
-                    // }
                 },
 
                 updateInput(e) {
                     this.input = e.target.innerText
                 },
 
-                onInputUpdate() {
-                    console.log("update")
-                    console.log(this.input)
-                    if (this.encodeMode) {
-                        this.updateFrequencies(this.input)
-                    } else {
-                        if (this.input.startsWith("JUh")) {
-                            this.binaryInputScanner = BinaryScanner.fromBase64(this.input)
-                        } else if (this.input.startsWith("25485546")) {
-                            this.binaryInputScanner = BinaryScanner.fromHex(this.input)
-                        } else if (this.input.startsWith("00100101010010000101010101000110")) {
-                            this.binaryInputScanner = BinaryScanner.fromBin(this.input)
-                        }
-                        if (!this.binaryInputScanner || this.binaryInputScanner.nextInt() !== formatCode) {
-                            this.binaryInputScanner = undefined
-                            this.errorDescription = "unknown-format"
-                        }
-                    }
-                },
-
-                updateFrequencies(input) {
-                    const counter = {}
-                    for (const c of input) {
-                        counter[c] = (counter[c] || 0) + 1
-                    }
-                    const frequencies = []
-                    for (let c in counter) {
-                        frequencies.push({c: c, frequency: counter[c]})
-                    }
+                doEncoding() {
+                    const {frequencies, tree, result} = encode(this.input)
                     this.frequencies = frequencies
+                    this.tree = tree
+                    this.encodedBuffer = result
                 },
 
-                updateTree(frequencies) {
-                    this.tree = buildHuffmanTree(frequencies)
-                },
+                doDecoding() {
 
-                encode(tree, input, frequencies) {
-                    const buffer = new BinaryBuffer()
-
-                    buffer.pushInt(formatCode)  // stands for %HUF
-                    buffer.pushInt(1)  // Version
-                    buffer.pushInt(frequencies.length)
-
-                    for (const {c, frequency} of frequencies) {
-                        buffer.pushChar(c)
-                        buffer.pushInt(frequency)
-                    }
-
-                    buffer.pushInt(input.length)
-
-                    const dict = dictionaryFromTree(tree)
-
-                    for (const c of input) {
-                        buffer.pushBinary(dict[c].binary, dict[c].size)
-                    }
-
-                    this.encodedBuffer = buffer
                 },
 
                 copyResult(type) {
@@ -218,36 +166,36 @@
                         console.error(`Unknown result type: ${type}`)
                     }
                 },
+
+                setInput(content) {
+                    this.input = content
+                    this.$refs.textarea.setContent(content)
+                },
             },
 
             created() {
-                this.encode(undefined, "", "")
+                this.doEncoding()
             },
 
             watch: {
-                // TODO: generate those hard-coded strings from formatCode
                 input() {
-                    this.onInputUpdate()
+                    if (this.encodeMode) {
+                        this.doEncoding()
+                    } else {
+                        this.doDecoding()
+                    }
                 },
 
                 encodeMode() {
                     if (this.encodeMode) {
-                        this.input = "" // TODO: temporary solution
+                        this.setInput("")
+                        this.doEncoding()
                     } else {
-                        this.input = this.encodedBuffer.toHex()
+                        this.setInput(this.encodedBuffer.toHex())
+                        this.encodedBuffer = undefined
+                        this.doDecoding()
                     }
-
-                    this.$refs.textarea.innerText = this.input
-                },
-
-                frequencies() {
-                    this.updateTree(this.frequencies)
-                },
-
-                tree() {
-                    this.encode(this.tree, this.input, this.frequencies)
-                    console.log(this.encodedBuffer)
-                },
+                }
             }
         })).catch(e => console.error(e))
 </script>
