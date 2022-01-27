@@ -38,6 +38,23 @@
         </div>
 
         <div class="spaced-out3 shadow accent-bg rounded" id="algorithm-result">
+            <div class="full-width flex spaced-out3 lighten smaller">
+                <div class="grow full-width">
+                    <span v-if="this.originalSize !== undefined">
+                        Оригинальный размер: {{this.originalSize}} байт
+                    </span>
+                </div>
+                <div class="grow full-width">
+                    <span v-if="this.compressedSize !== undefined">
+                        Сжатый размер: {{this.compressedSize}} байт
+                    </span>
+                </div>
+                <div class="grow full-width">
+                    <span v-if="this.originalSize">
+                        Коэффициент сжатия: {{Math.round(this.compressedSize / this.originalSize * 100) / 100}}
+                    </span>
+                </div>
+            </div>
 
             <div v-if="this.encodeMode">
                 <div class="algorithm-result-content">
@@ -72,6 +89,9 @@
                     </div>
                     <div v-else>
                         {{this.decodedText}}
+                        <div class="center spaced-out2 copy-buttons">
+                            <ui-button :on-click="() => this.copyResult('decoded')">Скопировать</ui-button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -117,11 +137,14 @@
                 frequencies: [],
                 tree: undefined,
                 encodedBuffer: undefined,
-
                 encodingVersion: 1,
+
                 decodingError: undefined,
                 decodedText: undefined,
+
                 compressionRatio: undefined,
+                originalSize: undefined,
+                compressedSize: undefined,
 
                 snackbarType: "success",
             }),
@@ -140,6 +163,8 @@
                     this.frequencies = encoding.frequencies
                     this.tree = encoding.tree
                     this.encodedBuffer = encoding.result
+                    this.originalSize = encoding.originalSize
+                    this.compressedSize = encoding.compressedSize
                 },
 
                 doDecoding() {
@@ -149,7 +174,8 @@
                     this.frequencies = decoding.frequencies
                     this.tree = decoding.tree
                     this.decodedText = decoding.result
-                    this.compressionRatio = decoding.compressionRatio
+                    this.originalSize = decoding.originalSize
+                    this.compressedSize = decoding.compressedSize
                 },
 
                 copyResult(type) {
@@ -174,6 +200,8 @@
                         copyToClipboard(this.encodedBuffer.toHex(), callback)
                     } else if (type === "base64") {
                         copyToClipboard(this.encodedBuffer.toBase64(), callback)
+                    } else if (type === "decoded") {
+                        copyToClipboard(this.decodedText, callback)
                     } else {
                         console.error(`Unknown result type: ${type}`)
                     }
@@ -200,7 +228,10 @@
 
                 encodeMode() {
                     if (this.encodeMode) {
-                        this.setInput("")
+                        if (this.decodedText !== undefined) {
+                            this.setInput(this.decodedText)
+                            this.decodedText = undefined
+                        }
                         this.doEncoding()
                     } else {
                         this.setInput(this.encodedBuffer.toHex())

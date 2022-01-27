@@ -93,10 +93,15 @@ export function encode(input) {
     const tree = buildHuffmanTree(frequencies)
     const buffer = encodeUsingTree(input, frequencies, tree)
 
+    const originalSize = (new TextEncoder().encode(input)).length
+    const compressedSize = buffer.getByteSize()
+
     return {
         frequencies: frequencies,
         tree: tree,
         result: buffer,
+        originalSize: originalSize,
+        compressedSize: compressedSize,
     }
 }
 
@@ -179,9 +184,8 @@ function decodeVer1(scanner) {
         frequencies: frequencies,
         tree: tree,
         result: result,
-        getByteSize: originalSize,
-        compressedSize: originalSize,
-        compressionRatio: compressedSize / originalSize,
+        originalSize: originalSize,
+        compressedSize: compressedSize,
     }
 }
 
