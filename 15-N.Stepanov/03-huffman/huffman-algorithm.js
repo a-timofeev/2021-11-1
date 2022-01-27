@@ -1,4 +1,5 @@
 import BinaryBuffer from "./binary-buffer.js"
+import BinaryScanner from "./binary-scanner.js"
 
 export class TreeNode {
     constructor(frequency, character, zero, one) {
@@ -9,7 +10,7 @@ export class TreeNode {
     }
 }
 
-export function buildHuffmanTree(frequencies) {
+function buildHuffmanTree(frequencies) {
     const nodes = frequencies.map(f => new TreeNode(f.frequency, f.c, undefined, undefined))
     while (nodes.length > 1) {
         nodes.sort((lhs, rhs) => rhs.frequency - lhs.frequency)
@@ -20,7 +21,7 @@ export function buildHuffmanTree(frequencies) {
     return nodes[0]
 }
 
-export function dictionaryFromTree(tree) {
+function dictionaryFromTree(tree) {
     const result = {}
 
     const walk = (node, path, size) => {
@@ -39,8 +40,9 @@ export function dictionaryFromTree(tree) {
 
 
 const formatCode = 0x25485546
+const formatCodeBase64Prefix = "JUh"  // hardcoded format code in base64
 
-export function computeFrequencies(input) {
+function computeFrequencies(input) {
     const counter = {}
     for (const c of input) {
         counter[c] = (counter[c] || 0) + 1
@@ -54,7 +56,7 @@ export function computeFrequencies(input) {
     return frequencies
 }
 
-export function encodeUsingTree(input, frequencies, tree) {
+function encodeUsingTree(input, frequencies, tree) {
     const buffer = new BinaryBuffer()
 
     buffer.pushInt(formatCode)  // stands for %HUF
