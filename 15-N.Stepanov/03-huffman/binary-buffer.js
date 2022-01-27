@@ -136,10 +136,6 @@ export default class BinaryBuffer {
         return binString
     }
 
-    toBase64() {
-        return btoa(this.toBinaryString())
-    }
-
     getByteSize() {
         return (this.#chunkPtr + 1) * BinaryBuffer.#BITS_PER_CHUNK / 8
     }

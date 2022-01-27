@@ -66,7 +66,6 @@
                     <button-group>
                         <ui-button :on-click="() => this.copyResult('bin')">Скопировать Binary</ui-button>
                         <ui-button :on-click="() => this.copyResult('hex')">Скопировать Hex</ui-button>
-                        <ui-button :on-click="() => this.copyResult('base64')">Скопировать Base64</ui-button>
                     </button-group>
                 </div>
             </div>
@@ -198,8 +197,6 @@
                         copyToClipboard(this.encodedBuffer.toBin(), callback)
                     } else if (type === "hex") {
                         copyToClipboard(this.encodedBuffer.toHex(), callback)
-                    } else if (type === "base64") {
-                        copyToClipboard(this.encodedBuffer.toBase64(), callback)
                     } else if (type === "decoded") {
                         copyToClipboard(this.decodedText, callback)
                     } else {
