@@ -51,9 +51,15 @@ $transition-duration = 0.7s
 #algorithm-result
     overflow-wrap break-word
     word-break break-all
-    & #algorithm-result-content
+
+    & .algorithm-result-content
         padding space(2)
         max-height 400px
         overflow-y scroll
+
     & .copy-buttons
         padding space(2)
+
+    & .error
+        font-weight bold
+        color $error

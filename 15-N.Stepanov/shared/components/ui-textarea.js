@@ -6,7 +6,7 @@ export default Vue.component('ui-textarea', {
         @input="onInput"
         contenteditable
     >
-        <slot></slot> 
+
     </span>
     `,
     props: {

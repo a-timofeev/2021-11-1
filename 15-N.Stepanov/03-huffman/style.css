@@ -357,11 +357,15 @@ ul.table-of-contents > li > ul {
   overflow-wrap: break-word;
   word-break: break-all;
 }
-#algorithm-result #algorithm-result-content {
+#algorithm-result .algorithm-result-content {
   padding: 16px;
   max-height: 400px;
   overflow-y: scroll;
 }
 #algorithm-result .copy-buttons {
   padding: 16px;
+}
+#algorithm-result .error {
+  font-weight: bold;
+  color: #ff3f3f;
 }

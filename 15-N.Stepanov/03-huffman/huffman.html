@@ -33,21 +33,42 @@
                     @input="updateInput"
                     ref="textarea"
             >
+
             </ui-textarea>
         </div>
 
         <div class="spaced-out3 shadow accent-bg rounded" id="algorithm-result">
-            <div id="algorithm-result-content">
-                <div>
-                    {{this.encodedBuffer?.toHex()}}
+            <div v-if="this.encodeMode">
+                <div class="algorithm-result-content">
+                    <div>
+                        {{this.encodedBuffer?.toHex()}}
+                    </div>
+                </div>
+                <div class="center spaced-out2 copy-buttons">
+                    <button-group>
+                        <ui-button :on-click="() => this.copyResult('bin')">Скопировать Binary</ui-button>
+                        <ui-button :on-click="() => this.copyResult('hex')">Скопировать Hex</ui-button>
+                        <ui-button :on-click="() => this.copyResult('base64')">Скопировать Base64</ui-button>
+                    </button-group>
                 </div>
             </div>
-            <div class="center spaced-out2 copy-buttons">
-                <button-group>
-                    <ui-button :on-click="() => this.copyResult('bin')">Скопировать Binary</ui-button>
-                    <ui-button :on-click="() => this.copyResult('hex')">Скопировать Hex</ui-button>
-                    <ui-button :on-click="() => this.copyResult('base64')">Скопировать Base64</ui-button>
-                </button-group>
+            <div v-else>
+                <div class="algorithm-result-content">
+                    <div v-if="this.errorDescription !== undefined" class="error">
+                        <div v-if="this.errorDescription === 'unknown-format'">
+                            Этот формат не известен. Вы уверены, что вы правильно скопировали закодированный текст?
+                        </div>
+                        <div v-else-if="this.errorDescription === 'unsupported-version'">
+                            Эта версия формата не поддерживается
+                        </div>
+                        <div v-else>
+                            Неизвестная ошибка: {{this.errorDescription}}
+                        </div>
+                    </div>
+                    <div v-else>
+                        ok
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -68,7 +89,7 @@
 
         </huffman-tree-chart>
 
-        <ui-snackbar ref="snackbar"></ui-snackbar>
+        <ui-snackbar ref="snackbar" :type="snackbarType"></ui-snackbar>
 
     </app-main>
     <app-footer class="shadow"></app-footer>
@@ -77,7 +98,10 @@
 <script type="module">
     import {buildHuffmanTree, dictionaryFromTree} from "./huffman-algorithm.js"
     import BinaryBuffer from "./binary-buffer.js"
+    import BinaryScanner from "./binary-scanner.js"
     import {copyToClipboard} from "./clipboard.js"
+
+    const formatCode = 0x25485546
 
     import("../shared/components/all.js")
         .then(() => import("./local-components.js"))
@@ -90,15 +114,43 @@
                 frequencies: [],
                 tree: undefined,
                 encodedBuffer: undefined,
+                binaryInputScanner: undefined,
+                errorDescription: undefined,
+                snackbarType: "success",
             }),
 
             methods: {
                 switchMode() {
                     this.encodeMode = !this.encodeMode
+                    // if (this.encodeMode) {
+                    //     this.binaryInputScanner = undefined
+                    // } else {
+                    //     this.encodedBuffer = undefined
+                    // }
                 },
 
                 updateInput(e) {
                     this.input = e.target.innerText
+                },
+
+                onInputUpdate() {
+                    console.log("update")
+                    console.log(this.input)
+                    if (this.encodeMode) {
+                        this.updateFrequencies(this.input)
+                    } else {
+                        if (this.input.startsWith("JUh")) {
+                            this.binaryInputScanner = BinaryScanner.fromBase64(this.input)
+                        } else if (this.input.startsWith("25485546")) {
+                            this.binaryInputScanner = BinaryScanner.fromHex(this.input)
+                        } else if (this.input.startsWith("00100101010010000101010101000110")) {
+                            this.binaryInputScanner = BinaryScanner.fromBin(this.input)
+                        }
+                        if (!this.binaryInputScanner || this.binaryInputScanner.nextInt() !== formatCode) {
+                            this.binaryInputScanner = undefined
+                            this.errorDescription = "unknown-format"
+                        }
+                    }
                 },
 
                 updateFrequencies(input) {
@@ -120,7 +172,7 @@
                 encode(tree, input, frequencies) {
                     const buffer = new BinaryBuffer()
 
-                    buffer.pushBinary(0x25485546, 32)  // stands for %HUFF
+                    buffer.pushInt(formatCode)  // stands for %HUF
                     buffer.pushInt(1)  // Version
                     buffer.pushInt(frequencies.length)
 
@@ -144,15 +196,14 @@
                     const callback = ({success, error}) => {
                         if (success) {
                             this.$refs.snackbar.appear("📌 Скопировано!")
-                            this.$refs.snackbar.type = "success";
+                            this.snackbarType = "success"
                         } else if (error === "unsupported") {
                             this.$refs.snackbar.appear("🤔 Браузер не поддерживает копирование, извините 😢")
-                            this.$refs.snackbar.type = "error";
+                            this.snackbarType = "error"
                         } else {
                             this.$refs.snackbar.appear(`😲 Ошибка: ${error}`)
-                            this.$refs.snackbar.type = "error";
+                            this.snackbarType = "error"
                         }
-                        console.log(success, error)
                     }
 
                     if (type === "text") {
@@ -166,7 +217,7 @@
                     } else {
                         console.error(`Unknown result type: ${type}`)
                     }
-                }
+                },
             },
 
             created() {
@@ -174,8 +225,19 @@
             },
 
             watch: {
+                // TODO: generate those hard-coded strings from formatCode
                 input() {
-                    this.updateFrequencies(this.input)
+                    this.onInputUpdate()
+                },
+
+                encodeMode() {
+                    if (this.encodeMode) {
+                        this.input = "" // TODO: temporary solution
+                    } else {
+                        this.input = this.encodedBuffer.toHex()
+                    }
+
+                    this.$refs.textarea.innerText = this.input
                 },
 
                 frequencies() {
@@ -184,6 +246,7 @@
 
                 tree() {
                     this.encode(this.tree, this.input, this.frequencies)
+                    console.log(this.encodedBuffer)
                 },
             }
         })).catch(e => console.error(e))
