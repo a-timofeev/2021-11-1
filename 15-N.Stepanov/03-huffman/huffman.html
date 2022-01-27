@@ -58,7 +58,7 @@
 
             <div v-if="this.encodeMode">
                 <div class="algorithm-result-content">
-                    <div>
+                    <div class="break-words">
                         {{this.encodedBuffer?.toHex()}}
                     </div>
                 </div>
@@ -87,7 +87,9 @@
                         </div>
                     </div>
                     <div v-else>
-                        {{this.decodedText}}
+                        <div class="pre">
+                            {{this.decodedText}}
+                        </div>
                         <div class="center spaced-out2 copy-buttons">
                             <ui-button :on-click="() => this.copyResult('decoded')">Скопировать</ui-button>
                         </div>

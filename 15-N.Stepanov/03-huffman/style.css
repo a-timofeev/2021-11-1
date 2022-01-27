@@ -66,6 +66,17 @@ header {
 .full-width {
   width: 100%;
 }
+.pre {
+  white-space: pre;
+}
+.break-words {
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+.not-break-words {
+  overflow-wrap: normal;
+  word-break: normal;
+}
 ul.table-of-contents {
   list-style: "📌";
 }
@@ -240,6 +251,17 @@ th {
 .full-width {
   width: 100%;
 }
+.pre {
+  white-space: pre;
+}
+.break-words {
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+.not-break-words {
+  overflow-wrap: normal;
+  word-break: normal;
+}
 ul.table-of-contents {
   list-style: "📌";
 }
@@ -358,10 +380,6 @@ ul.table-of-contents > li > ul {
 }
 #huffman-tree-chart text {
   font-size: 30px;
-}
-#algorithm-result {
-  overflow-wrap: break-word;
-  word-break: break-all;
 }
 #algorithm-result .algorithm-result-content {
   padding: 16px;
