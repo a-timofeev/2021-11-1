@@ -86,4 +86,8 @@ export default class BinaryScanner {
         }
         return res
     }
+
+    getCapacity() {
+        return this.#buffer.length
+    }
 }

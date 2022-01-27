@@ -90,3 +90,85 @@ export function encode(input) {
         result: buffer,
     }
 }
+
+
+function inputToBinaryScanner(input) {
+    let result
+    if (input.startsWith(formatCode.toString(16))) {
+        result = BinaryScanner.fromHex(input)
+    } else if (input.startsWith(formatCode.toString(2))) {
+        result = BinaryScanner.fromBin(input)
+    } else if (formatCodeBase64Prefix) {
+        result = BinaryScanner.fromBase64(input)
+    }
+
+    if (!result || result.nextInt() !== formatCode) {
+        return undefined
+    } else {
+        return result
+    }
+}
+
+function decodeFrequencies(scanner) {
+    const headerSize = scanner.nextInt()
+    const frequencies = []
+
+    if (headerSize > scanner.getCapacity()) {
+        throw new Error("Header size is too large")
+    }
+
+    for (let i = 0; i < headerSize; i++) {
+        const character = scanner.nextChar()
+        const frequency = scanner.nextInt()
+        frequencies.push({c: character, frequency: frequency})
+    }
+
+    return frequencies
+}
+
+function decodeVer1(scanner) {
+    let frequencies
+    try {
+        frequencies = decodeFrequencies(scanner)
+    } catch {
+        return {
+            version: 1,
+            success: false,
+            error: "unreadable-header",
+        }
+    }
+
+    const tree = buildHuffmanTree(frequencies)
+
+    return {
+        version: 1,
+        success: true,
+        error: undefined,
+        frequencies: frequencies,
+        tree: tree,
+        result: undefined,
+        compressionRatio: undefined,
+    }
+}
+
+export function decode(input) {
+    const scanner = inputToBinaryScanner(input)
+
+    if (scanner === undefined) {
+        return {
+            success: false,
+            error: "unknown-format"
+        }
+    }
+
+    const version = scanner.nextInt()
+
+    if (version === 1) {
+        return decodeVer1(scanner)
+    } else {
+        return {
+            success: false,
+            error: "unsupported-version"
+        }
+    }
+}

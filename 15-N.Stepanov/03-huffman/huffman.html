@@ -38,6 +38,7 @@
         </div>
 
         <div class="spaced-out3 shadow accent-bg rounded" id="algorithm-result">
+
             <div v-if="this.encodeMode">
                 <div class="algorithm-result-content">
                     <div>
@@ -52,24 +53,29 @@
                     </button-group>
                 </div>
             </div>
+
             <div v-else>
                 <div class="algorithm-result-content">
-                    <div v-if="this.errorDescription !== undefined" class="error">
-                        <div v-if="this.errorDescription === 'unknown-format'">
-                            Этот формат не известен. Вы уверены, что вы правильно скопировали закодированный текст?
+                    <div v-if="this.decodingError !== undefined" class="error">
+                        <div v-if="this.decodingError === 'unknown-format'">
+                            Этот формат не известен. Вы уверены, что это закодированный текст?
                         </div>
-                        <div v-else-if="this.errorDescription === 'unsupported-version'">
+                        <div v-else-if="this.decodingError === 'unsupported-version'">
                             Эта версия формата не поддерживается
                         </div>
+                        <div v-else-if="this.decodingError === 'unreadable-header'">
+                            Ошибка в формате заголовка
+                        </div>
                         <div v-else>
-                            Неизвестная ошибка: {{this.errorDescription}}
+                            Неизвестная ошибка: {{this.decodingError}}
                         </div>
                     </div>
                     <div v-else>
-                        ok
+                        {{this.decodedText}}
                     </div>
                 </div>
             </div>
+
         </div>
 
         <frequency-chart
@@ -97,8 +103,6 @@
 
 <script type="module">
     import {encode, decode} from "./huffman-algorithm.js"
-    import BinaryBuffer from "./binary-buffer.js"
-    import BinaryScanner from "./binary-scanner.js"
     import {copyToClipboard} from "./clipboard.js"
 
     import("../shared/components/all.js")
@@ -114,8 +118,10 @@
                 tree: undefined,
                 encodedBuffer: undefined,
 
-                binaryInputScanner: undefined,
-                errorDescription: undefined,
+                encodingVersion: 1,
+                decodingError: undefined,
+                decodedText: undefined,
+                compressionRatio: undefined,
 
                 snackbarType: "success",
             }),
@@ -130,14 +136,22 @@
                 },
 
                 doEncoding() {
-                    const {frequencies, tree, result} = encode(this.input)
-                    this.frequencies = frequencies
-                    this.tree = tree
-                    this.encodedBuffer = result
+                    const encoding = encode(this.input)
+                    this.frequencies = encoding.frequencies
+                    this.tree = encoding.tree
+                    this.encodedBuffer = encoding.result
+                    console.log(encoding.frequencies)
                 },
 
                 doDecoding() {
-
+                    const decoding = decode(this.input)
+                    this.encodingVersion = decoding.version
+                    this.decodingError = decoding.error
+                    this.frequencies = decoding.frequencies
+                    this.tree = decoding.tree
+                    this.decodedText = decoding.result
+                    this.compressionRatio = decoding.compressionRatio
+                    console.log(decoding.frequencies)
                 },
 
                 copyResult(type) {
