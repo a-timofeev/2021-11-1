@@ -140,7 +140,6 @@
                     this.frequencies = encoding.frequencies
                     this.tree = encoding.tree
                     this.encodedBuffer = encoding.result
-                    console.log(encoding.frequencies)
                 },
 
                 doDecoding() {
@@ -151,7 +150,6 @@
                     this.tree = decoding.tree
                     this.decodedText = decoding.result
                     this.compressionRatio = decoding.compressionRatio
-                    console.log(decoding.frequencies)
                 },
 
                 copyResult(type) {

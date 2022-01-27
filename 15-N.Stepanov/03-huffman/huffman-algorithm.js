@@ -53,7 +53,16 @@ function computeFrequencies(input) {
         frequencies.push({c: c, frequency: counter[c]})
     }
 
-    return frequencies
+    return frequencies.sort((left, right) => {
+        // Descending order
+        if (left.frequency < right.frequency || (left.frequency === right.frequency && left.c < right.c)) {
+            return 1;
+        } else if (left.frequency > right.frequency || (left.frequency === right.frequency && left.c > right.c)) {
+            return -1;
+        } else {
+            return 0;
+        }
+    })
 }
 
 function encodeUsingTree(input, frequencies, tree) {
@@ -126,6 +135,25 @@ function decodeFrequencies(scanner) {
     return frequencies
 }
 
+function decodeTextUsingTree(scanner, tree) {
+    const length = scanner.nextInt()
+
+    let result = ""
+    for (let i = 0; i < length; i++) {
+        let currentNode = tree
+        while (currentNode.character === undefined) {
+            if (scanner.nextBit() === 0) {
+                currentNode = currentNode.zero
+            } else {
+                currentNode = currentNode.one
+            }
+        }
+        result += currentNode.character
+    }
+
+    return result
+}
+
 function decodeVer1(scanner) {
     let frequencies
     try {
@@ -139,6 +167,10 @@ function decodeVer1(scanner) {
     }
 
     const tree = buildHuffmanTree(frequencies)
+    const result = decodeTextUsingTree(scanner, tree)
+
+    const originalSize = (new TextEncoder().encode(result)).length
+    const compressedSize = scanner.getByteSize()
 
     return {
         version: 1,
@@ -146,8 +178,10 @@ function decodeVer1(scanner) {
         error: undefined,
         frequencies: frequencies,
         tree: tree,
-        result: undefined,
-        compressionRatio: undefined,
+        result: result,
+        getByteSize: originalSize,
+        compressedSize: originalSize,
+        compressionRatio: compressedSize / originalSize,
     }
 }
 

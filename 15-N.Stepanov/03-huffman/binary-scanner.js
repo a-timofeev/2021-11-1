@@ -60,16 +60,31 @@ export default class BinaryScanner {
         )
     }
 
+    #advanceChuckPtr(d = 1) {
+        this.#chunkPtr += d
+        if (this.#chunkPtr > this.getCapacity()) {
+            throw new Error("Out of bounds")
+        }
+    }
+
+    #advanceBitPtr(d = 1) {
+        this.#bitPtr += d
+        while (this.#bitPtr >= BinaryScanner.#BITS_PER_CHUNK) {
+            this.#bitPtr -= BinaryScanner.#BITS_PER_CHUNK;
+            this.#advanceChuckPtr()
+        }
+    }
+
     #align() {
         if (this.#bitPtr === 0) return
         this.#bitPtr = 0
-        this.#chunkPtr++
+        this.#advanceChuckPtr()
     }
 
     nextInt() {
         this.#align()
         const res = this.#buffer[this.#chunkPtr]
-        this.#chunkPtr++
+        this.#advanceChuckPtr()
         return res
     }
 
@@ -79,15 +94,15 @@ export default class BinaryScanner {
 
     nextBit() {
         const res = this.#buffer[this.#chunkPtr] & (1 << this.#bitPtr)
-        this.#bitPtr++
-        if (this.#bitPtr >= BinaryScanner.#BITS_PER_CHUNK) {
-            this.#bitPtr = 0
-            this.#chunkPtr++
-        }
+        this.#advanceBitPtr()
         return res
     }
 
     getCapacity() {
         return this.#buffer.length
+    }
+
+    getByteSize() {
+        return this.getCapacity() * BinaryScanner.#BITS_PER_CHUNK / 8
     }
 }

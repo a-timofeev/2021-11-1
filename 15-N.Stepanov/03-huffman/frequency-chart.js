@@ -21,7 +21,6 @@ export default Vue.component('frequency-chart', {
     methods: {
         updateChartData() {
             const frequencies = [...this.frequencies]
-            frequencies.sort((a, b) => b.frequency - a.frequency)
             frequencies.length = Math.min(frequencies.length, this.maxElements)
             const ys = d3.map(frequencies, d => d.frequency)
             const xs = d3.map(frequencies, d => d.c)

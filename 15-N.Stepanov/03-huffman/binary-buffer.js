@@ -85,7 +85,7 @@ export default class BinaryBuffer {
     }
 
     pushBinary(uintValue, bitSize) {
-        for (let bitIt = 0; bitIt < bitSize; bitIt++) {
+        for (let bitIt = bitSize - 1; bitIt >= 0; bitIt--) {
             this.pushBit((uintValue >> bitIt) & 1)
         }
     }
@@ -128,8 +128,6 @@ export default class BinaryBuffer {
         this.shrinkToFit()
         const bufferInt8 = this.#containerToInt8Array()
         let binString = ""
-        console.log(bufferInt8)
-        console.log(binString)
 
         bufferInt8.map(e => {
             binString += String.fromCharCode(e)
