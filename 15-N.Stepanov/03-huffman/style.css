@@ -287,8 +287,23 @@ ul.table-of-contents > li > ul {
   opacity: 0;
   transition: transform 0.25s ease-in-out, opacity 0.125s ease-in-out;
   transition-delay: 0s, 0.125s;
-  background-color: #9affff;
   box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  background-color: #62ddf3;
+}
+.ui-snackbar .snackbar-content.secondary {
+  background-color: #ec407a;
+}
+.ui-snackbar .snackbar-content.info {
+  background-color: #3fc5ff;
+}
+.ui-snackbar .snackbar-content.success {
+  background-color: #76f662;
+}
+.ui-snackbar .snackbar-content.warning {
+  background-color: #ffd93f;
+}
+.ui-snackbar .snackbar-content.error {
+  background-color: #ff3f3f;
 }
 .ui-snackbar .snackbar-content.visible {
   transform: scale(1);

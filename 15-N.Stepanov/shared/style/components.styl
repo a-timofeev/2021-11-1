@@ -39,8 +39,19 @@
         opacity 0
         transition transform 0.25s ease-in-out, opacity 0.125s ease-in-out
         transition-delay 0s, 0.125s
-        background-color $primary-light
         shadow()
+
+        background-color $primary
+        &.secondary
+            background-color $secondary
+        &.info
+            background-color $info
+        &.success
+            background-color $success
+        &.warning
+            background-color $warning
+        &.error
+            background-color $error
 
         &.visible
             transform scale(1)
