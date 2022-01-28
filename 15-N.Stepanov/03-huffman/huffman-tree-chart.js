@@ -3,7 +3,7 @@ import {TreeNode} from "./huffman-algorithm.js"
 
 export default Vue.component('huffman-tree-chart', {
     template: `
-    <svg ref="svg" :viewBox="[-width / 2, -height / 2, width, height]">
+    <svg ref="svg" :viewBox="[-width / 2, -height / 10, width, height]">
     </svg>
     `,
     props: {
@@ -14,15 +14,12 @@ export default Vue.component('huffman-tree-chart', {
     data() {
         return {
             width: 2000,
-            height: 2000,
+            height: 1000,
             margin: 30,
             transitionDuration: 200,
 
-            characterNodeRadius: 16,
-            helperNodeRadius: 6,
-
-            edges: [],
-            nodes: [],
+            nodeRadius: 16,
+            randomOffset: 6,
         }
     },
 
@@ -32,24 +29,49 @@ export default Vue.component('huffman-tree-chart', {
             const edges = []
             let id = 0
 
-            const dfs = node => {
+            if (!this.tree) return [[], []]
+
+            const queue = [this.tree]
+
+            // Prepare node ids in bfs order
+            while (queue.length > 0) {
+                const node = queue.shift()
                 node.id = id++
                 nodes.push(node)
 
                 if (node.zero) {
-                    dfs(node.zero)
+                    queue.push(node.zero)
+                }
+
+                if (node.one) {
+                    queue.push(node.one)
+                }
+            }
+
+            const dfs = (node, depth, lb, rb) => {
+                const mid = (lb + rb) / 2
+                node.x = mid
+                node.y = this.height / 20 * depth + (node.id % 3) * 15
+
+                let zeroBounds = [lb, mid], oneBounds = [mid, rb]
+                if (node.id % 2 === 0) {
+                    const temp = zeroBounds
+                    zeroBounds = oneBounds
+                    oneBounds = temp
+                }
+
+                if (node.zero) {
+                    dfs(node.zero, depth + 1, zeroBounds[0] - 30, zeroBounds[1] + 30)
                     edges.push([node.id, node.zero.id])
                 }
 
                 if (node.one) {
-                    dfs(node.one)
+                    dfs(node.one, depth + 1, oneBounds[0] - 30, oneBounds[1] + 30)
                     edges.push([node.id, node.one.id])
                 }
             }
 
-            if (this.tree) {
-                dfs(this.tree)
-            }
+            dfs(this.tree, 0, -this.width / 2.5, this.width / 2.5)
 
             return [nodes, edges]
         },
@@ -57,70 +79,94 @@ export default Vue.component('huffman-tree-chart', {
         build() {
             const svg = d3.select(this.$refs.svg)
 
-            const link = svg.append("g")
-            const node = svg.append("g")
-            const text = svg.append("g")
-
-            const onTick = () => {
-                link
-                    .selectAll("line")
-                    .attr("x1", ([v, _]) => this.nodes[v].x)
-                    .attr("y1", ([v, _]) => this.nodes[v].y)
-                    .attr("x2", ([_, u]) => this.nodes[u].x)
-                    .attr("y2", ([_, u]) => this.nodes[u].y)
-
-                node
-                    .selectAll("circle")
-                    .attr("cx", d => d.x)
-                    .attr("cy", d => d.y)
-
-                text.selectAll("text")
-                    .attr("x", d => d.x)
-                    .attr("y", d => d.y)
-            }
-
-            const simulation = d3.forceSimulation()
-                .on("tick", onTick)
+            const link_group = svg.append("g")
+            const node_group = svg.append("g")
+            const text_group = svg.append("g")
 
             return () => {
-                const forceNode = d3.forceManyBody().strength(-20)
-                const forceLink = d3.forceLink(this.edges.map(e => ({source: e[0], target: e[1]}))).strength(2)
+                const [nodes, edges] = this.treeToRawData()
+                const transition = svg.transition().duration(this.transitionDuration)
 
                 const color = getComputedStyle(this.$refs.svg).getPropertyValue(
                     this.secondary ? "--color-secondary" : "--color"
                 )
+                console.log(this.secondary)
+                console.log(color)
 
-                const edgeColor = getComputedStyle(this.$refs.svg).getPropertyValue(
-                    this.secondary ? "--edge-color-secondary" : "--edge-color"
-                )
-
-                simulation
-                    .nodes(this.nodes)
-                    .force("link", forceLink)
-                    .force("charge", forceNode)
-                    .force("center", d3.forceCenter())
-
-                link
+                link_group
                     .selectAll("line")
-                    .data(this.edges)
-                    .join("line")
-                    .attr("stroke", color)
-                    .attr("stroke-width", "3")
+                    .data(edges, ([v, u]) => [nodes[v].id, nodes[u].id])
+                    .join(
+                        enter => enter
+                            .append("line")
+                            .attr("x1", ([v, _]) => nodes[v].x)
+                            .attr("y1", ([v, _]) => nodes[v].y)
+                            .attr("x2", ([_, u]) => nodes[u].x)
+                            .attr("y2", ([_, u]) => nodes[u].y)
+                            .attr("stroke", color)
+                            .attr("stroke-width", 3)
+                            .style("opacity", 0)
+                            .transition(transition)
+                            .style("opacity", 1),
+                        update => update
+                            .attr("stroke", color)
+                            .transition(transition)
+                            .style("opacity", 1)
+                            .attr("x1", ([v, _]) => nodes[v].x)
+                            .attr("y1", ([v, _]) => nodes[v].y)
+                            .attr("x2", ([_, u]) => nodes[u].x)
+                            .attr("y2", ([_, u]) => nodes[u].y),
+                        exit => exit
+                            .transition(transition)
+                            .style("opacity", 0)
+                            .remove(),
+                    )
 
-                node.selectAll("circle")
-                    .data(this.nodes)
-                    .join("circle")
-                    .attr("fill", color)
-                    .attr("r", d => d.character ? this.characterNodeRadius : this.helperNodeRadius)
+                node_group.selectAll("circle")
+                    .data(nodes, node => [node.x, node.y])
+                    .join(
+                        enter => enter
+                            .append("circle")
+                            .attr("cx", d => d.x)
+                            .attr("cy", d => d.y)
+                            .attr("r", 0)
+                            .attr("fill", color)
+                            .transition(transition)
+                            .attr("r", this.nodeRadius),
+                        update => update
+                            .attr("fill", color)
+                            .transition(transition)
+                            .attr("r", this.nodeRadius)
+                            .attr("cx", d => d.x)
+                            .attr("cy", d => d.y),
+                        exit => exit
+                            .transition(transition)
+                            .attr("r", 0)
+                            .remove()
+                    )
 
-                text.selectAll("text")
-                    .data(this.nodes.filter(node => node.character))
-                    .join("text")
-                    .text(d => d.character)
-                    .attr("text-anchor", "middle")
-                    .attr("dominant-baseline", "middle")
-
-                simulation.alphaDecay(0)
+                text_group.selectAll("text")
+                    .data(nodes.filter(node => node.character), node => node.character)
+                    .join(
+                        enter => enter
+                            .append("text")
+                            .attr("x", d => d.x)
+                            .attr("y", d => d.y)
+                            .text(d => d.character)
+                            .attr("text-anchor", "middle")
+                            .attr("dominant-baseline", "middle")
+                            .style("opacity", 0)
+                            .transition(transition)
+                            .style("opacity", 1),
+                        update => update
+                            .transition(transition)
+                            .attr("x", d => d.x)
+                            .attr("y", d => d.y),
+                        exit => exit
+                            .transition(transition)
+                            .style("opacity", 0)
+                            .remove(),
+                    )
             }
         },
 
@@ -135,7 +181,6 @@ export default Vue.component('huffman-tree-chart', {
 
     watch: {
         tree() {
-            [this.nodes, this.edges] = this.treeToRawData()
             this.update()
         },
 
