@@ -29,5 +29,5 @@ export default Vue.component('ui-textarea', {
         setContent(string) {
             this.$refs.textarea.innerText = string
         },
-    }
+    },
 })

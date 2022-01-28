@@ -1,6 +1,33 @@
 import BinaryBuffer from "./binary-buffer.js"
 import BinaryScanner from "./binary-scanner.js"
 
+
+const formatCode = 0x25485546
+
+function computeFrequencies(input) {
+    const counter = {}
+    for (const c of input) {
+        counter[c] = (counter[c] || 0) + 1
+    }
+
+    const frequencies = []
+    for (let c in counter) {
+        frequencies.push({c: c, frequency: counter[c]})
+    }
+
+    return frequencies.sort((left, right) => {
+        // Descending order
+        if (left.frequency < right.frequency || (left.frequency === right.frequency && left.c < right.c)) {
+            return 1
+        } else if (left.frequency > right.frequency || (left.frequency === right.frequency && left.c > right.c)) {
+            return -1
+        } else {
+            return 0
+        }
+    })
+}
+
+
 export class TreeNode {
     constructor(frequency, character, zero, one) {
         this.frequency = frequency
@@ -36,33 +63,6 @@ function dictionaryFromTree(tree) {
 
     walk(tree, 0, 0)
     return result
-}
-
-
-const formatCode = 0x25485546
-const formatCodeBase64Prefix = "JUh"  // hardcoded format code in base64
-
-function computeFrequencies(input) {
-    const counter = {}
-    for (const c of input) {
-        counter[c] = (counter[c] || 0) + 1
-    }
-
-    const frequencies = []
-    for (let c in counter) {
-        frequencies.push({c: c, frequency: counter[c]})
-    }
-
-    return frequencies.sort((left, right) => {
-        // Descending order
-        if (left.frequency < right.frequency || (left.frequency === right.frequency && left.c < right.c)) {
-            return 1;
-        } else if (left.frequency > right.frequency || (left.frequency === right.frequency && left.c > right.c)) {
-            return -1;
-        } else {
-            return 0;
-        }
-    })
 }
 
 function encodeUsingTree(input, frequencies, tree) {
@@ -112,8 +112,6 @@ function inputToBinaryScanner(input) {
         result = BinaryScanner.fromHex(input)
     } else if (input.startsWith(formatCode.toString(2))) {
         result = BinaryScanner.fromBin(input)
-    } else if (formatCodeBase64Prefix) {
-        result = BinaryScanner.fromBase64(input)
     }
 
     if (!result || result.nextInt() !== formatCode) {

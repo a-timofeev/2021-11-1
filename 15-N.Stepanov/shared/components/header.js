@@ -17,6 +17,6 @@ export default Vue.component('app-header', {
             "https://i.ibb.co/4t0PKMz/ivan.jpg",
             "https://i.ibb.co/28K1RnZ/me.jpg",
             "https://i.ibb.co/BNcrrfQ/shark.jpg",
-        ])
-    })
+        ]),
+    }),
 })

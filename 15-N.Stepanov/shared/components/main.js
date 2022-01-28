@@ -10,6 +10,6 @@ export default Vue.component("app-main", {
     </main>
     `,
     props: {
-        back: String
-    }
+        back: String,
+    },
 })

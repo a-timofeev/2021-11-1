@@ -1,5 +1,6 @@
 .column-layout
     display flex
+
     & > *
         flex-grow 1
         margin space(1)
@@ -19,11 +20,13 @@
     @extend .shadow
     overflow hidden
     display flex
+
     & > button
         margin 0
         box-shadow none
         border-radius 0
         border-left #0008 solid 1px
+
         &:first-child
             border-left none
 
@@ -42,14 +45,19 @@
         shadow()
 
         background-color $primary
+
         &.secondary
             background-color $secondary
+
         &.info
             background-color $info
+
         &.success
             background-color $success
+
         &.warning
             background-color $warning
+
         &.error
             background-color $error
 

@@ -32,16 +32,16 @@ export default class BinaryScanner {
     static fromBin(string) {
         return new BinaryScanner(
             this.#convertToContainer(
-                [...string].map(c => parseInt(c, 2)), 1
-            )
+                [...string].map(c => parseInt(c, 2)), 1,
+            ),
         )
     }
 
     static fromHex(string) {
         return new BinaryScanner(
             this.#convertToContainer(
-                [...string].map(c => parseInt(c, 16)), 4
-            )
+                [...string].map(c => parseInt(c, 16)), 4,
+            ),
         )
     }
 
@@ -55,8 +55,8 @@ export default class BinaryScanner {
 
         return new BinaryScanner(
             this.#convertToContainer(
-                [...binaryString].map(c => c.charCodeAt(0)), 8
-            )
+                [...binaryString].map(c => c.charCodeAt(0)), 8,
+            ),
         )
     }
 
@@ -70,7 +70,7 @@ export default class BinaryScanner {
     #advanceBitPtr(d = 1) {
         this.#bitPtr += d
         while (this.#bitPtr >= BinaryScanner.#BITS_PER_CHUNK) {
-            this.#bitPtr -= BinaryScanner.#BITS_PER_CHUNK;
+            this.#bitPtr -= BinaryScanner.#BITS_PER_CHUNK
             this.#advanceChuckPtr()
         }
     }

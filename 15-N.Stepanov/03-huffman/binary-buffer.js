@@ -98,7 +98,7 @@ export default class BinaryBuffer {
         this.shrinkToFit()
         // noinspection JSCheckFunctionSignatures
         return Array.from(this.#buffer).map(
-            chunk => chunk.toString(16).padStart(BinaryBuffer.#BITS_PER_CHUNK / 4, "0")
+            chunk => chunk.toString(16).padStart(BinaryBuffer.#BITS_PER_CHUNK / 4, "0"),
         ).join("")
     }
 
@@ -106,34 +106,8 @@ export default class BinaryBuffer {
         this.shrinkToFit()
         // noinspection JSCheckFunctionSignatures
         return Array.from(this.#buffer).map(
-            chunk => chunk.toString(2).padStart(BinaryBuffer.#BITS_PER_CHUNK, "0")
+            chunk => chunk.toString(2).padStart(BinaryBuffer.#BITS_PER_CHUNK, "0"),
         ).join("")
-    }
-
-    #containerToInt8Array() {
-        const wordsInChunk = BinaryBuffer.#BITS_PER_CHUNK / 8
-        const size = this.#capacity * wordsInChunk
-        const bufferInt8 = new Int8Array(size)
-        const bytesInChunk = new Array(wordsInChunk)
-        for (let i = 0; i < this.#capacity; i++) {
-            for (let j = 0; j < wordsInChunk; j++) {
-                bytesInChunk[j] = (this.#buffer[i] >> (8 * (wordsInChunk - 1 - j))) & 0xFF
-            }
-            bufferInt8.set(bytesInChunk, i * wordsInChunk)
-        }
-        return bufferInt8
-    }
-
-    toBinaryString() {
-        this.shrinkToFit()
-        const bufferInt8 = this.#containerToInt8Array()
-        let binString = ""
-
-        bufferInt8.map(e => {
-            binString += String.fromCharCode(e)
-        })
-
-        return binString
     }
 
     getByteSize() {

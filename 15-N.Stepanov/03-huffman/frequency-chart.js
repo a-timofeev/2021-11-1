@@ -42,7 +42,7 @@ export default Vue.component('frequency-chart', {
         build() {
             this.updateChartData()
 
-            const {svg, data, xScale, yScale, xAxis, yAxis} = this.chartData
+            const {svg, xAxis, yAxis} = this.chartData
 
             const xAxisGroup = svg.append("g")
                 .attr("transform", `translate(0, ${this.height - this.margin})`)
@@ -70,7 +70,7 @@ export default Vue.component('frequency-chart', {
                 const transition = svg.transition().duration(this.transitionDuration)
 
                 const color = getComputedStyle(this.$refs.svg).getPropertyValue(
-                    this.secondary ? "--color-secondary" : "--color"
+                    this.secondary ? "--color-secondary" : "--color",
                 )
 
                 bars.selectAll("rect")
@@ -128,6 +128,6 @@ export default Vue.component('frequency-chart', {
 
         secondary() {
             this.update()
-        }
+        },
     },
 })

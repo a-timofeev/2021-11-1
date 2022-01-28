@@ -22,8 +22,8 @@ export default Vue.component('ui-snackbar', {
             validator(x) {
                 return x === undefined ||
                     ["secondary", "info", "success", "warning", "error"].indexOf(x) !== -1
-            }
-        }
+            },
+        },
     },
 
     data() {

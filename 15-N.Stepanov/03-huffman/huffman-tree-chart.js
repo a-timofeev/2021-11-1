@@ -88,7 +88,7 @@ export default Vue.component('huffman-tree-chart', {
                 const transition = svg.transition().duration(this.transitionDuration)
 
                 const color = getComputedStyle(this.$refs.svg).getPropertyValue(
-                    this.secondary ? "--color-secondary" : "--color"
+                    this.secondary ? "--color-secondary" : "--color",
                 )
                 console.log(this.secondary)
                 console.log(color)
@@ -142,7 +142,7 @@ export default Vue.component('huffman-tree-chart', {
                         exit => exit
                             .transition(transition)
                             .attr("r", 0)
-                            .remove()
+                            .remove(),
                     )
 
                 text_group.selectAll("text")
@@ -186,6 +186,6 @@ export default Vue.component('huffman-tree-chart', {
 
         secondary() {
             this.update()
-        }
+        },
     },
 })
