@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>🤔</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+    <!--link rel="stylesheet" href="../shared/style/stylesheet.css"-->
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://d3js.org/d3.v7.js"></script>
+</head>
+<body>
+
+<div id="root" :class="{secondary: !encodeMode}" class="accent-bg">
+    <app-header class="shadow">Алгоритм Хаффмана</app-header>
+
+    <app-main class="shadow" back="..">
+
+        <div class="center">
+            <ui-button :secondary="!encodeMode" :on-click="switchMode" id="mode-switcher" class="shadow">
+                <span v-if="encodeMode">Режим Кодирования</span>
+                <span v-else>Режим Декодирования</span>
+            </ui-button>
+        </div>
+
+        <div class="spaced-out3 flex">
+            <ui-textarea
+                    id="input-main"
+                    class="shadow accent-bg"
+                    dynamic-resize
+                    @input="updateInput"
+                    ref="textarea"
+            >
+
+            </ui-textarea>
+        </div>
+
+        <div class="spaced-out3 shadow accent-bg rounded" id="algorithm-result">
+            <div class="full-width flex spaced-out3 lighten smaller">
+                <div class="grow full-width">
+                    <span v-if="this.originalSize !== undefined">
+                        Оригинальный размер: {{this.originalSize}} байт
+                    </span>
+                </div>
+                <div class="grow full-width">
+                    <span v-if="this.compressedSize !== undefined">
+                        Сжатый размер: {{this.compressedSize}} байт
+                    </span>
+                </div>
+                <div class="grow full-width">
+                    <span v-if="this.originalSize">
+                        Коэффициент сжатия: {{Math.round(this.compressedSize / this.originalSize * 100) / 100}}
+                    </span>
+                </div>
+            </div>
+
+            <div v-if="this.encodeMode">
+                <div class="algorithm-result-content">
+                    <div class="break-words">
+                        {{this.encodedBuffer?.toHex()}}
+                    </div>
+                </div>
+                <div class="center spaced-out2 copy-buttons">
+                    <button-group>
+                        <ui-button :on-click="() => this.copyResult('bin')">Скопировать Binary</ui-button>
+                        <ui-button :on-click="() => this.copyResult('hex')">Скопировать Hex</ui-button>
+                    </button-group>
+                </div>
+            </div>
+
+            <div v-else>
+                <div class="algorithm-result-content">
+                    <div v-if="this.decodingError !== undefined" class="error">
+                        <div v-if="this.decodingError === 'unknown-format'">
+                            Этот формат не известен. Вы уверены, что это закодированный текст?
+                        </div>
+                        <div v-else-if="this.decodingError === 'unsupported-version'">
+                            Эта версия формата не поддерживается
+                        </div>
+                        <div v-else-if="this.decodingError === 'unreadable-header'">
+                            Ошибка в формате заголовка
+                        </div>
+                        <div v-else>
+                            Неизвестная ошибка: {{this.decodingError}}
+                        </div>
+                    </div>
+                    <div v-else>
+                        <div class="pre">
+                            {{this.decodedText}}
+                        </div>
+                        <div class="center spaced-out2 copy-buttons">
+                            <ui-button :on-click="() => this.copyResult('decoded')">Скопировать</ui-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <frequency-chart
+                :frequencies="this.frequencies"
+                class="shadow accent-bg rounded"
+                :secondary="!encodeMode"
+                id="frequency-chart"
+        >
+        </frequency-chart>
+
+        <huffman-tree-chart
+                :tree="this.tree"
+                class="shadow accent-bg rounded spaced-out3"
+                :secondary="!encodeMode"
+                id="huffman-tree-chart"
+        >
+
+        </huffman-tree-chart>
+
+        <ui-snackbar ref="snackbar" :type="snackbarType"></ui-snackbar>
+
+    </app-main>
+    <app-footer class="shadow"></app-footer>
+</div>
+
+<script type="module">
+    import {encode, decode} from "./huffman-algorithm.js"
+    import {copyToClipboard} from "../shared/util/clipboard.js"
+
+    import("../shared/components/all.js")
+        .then(() => import("./local-components.js"))
+        .then(_ => new Vue({
+            el: "#root",
+
+            data: () => ({
+                encodeMode: true,
+                input: "",
+
+                frequencies: [],
+                tree: undefined,
+                encodedBuffer: undefined,
+                encodingVersion: 1,
+
+                decodingError: undefined,
+                decodedText: undefined,
+
+                compressionRatio: undefined,
+                originalSize: undefined,
+                compressedSize: undefined,
+
+                snackbarType: "success",
+            }),
+
+            methods: {
+                switchMode() {
+                    this.encodeMode = !this.encodeMode
+                },
+
+                updateInput(e) {
+                    this.input = e.target.innerText
+                },
+
+                doEncoding() {
+                    const encoding = encode(this.input)
+                    this.frequencies = encoding.frequencies
+                    this.tree = encoding.tree
+                    this.encodedBuffer = encoding.result
+                    this.originalSize = encoding.originalSize
+                    this.compressedSize = encoding.compressedSize
+                },
+
+                doDecoding() {
+                    const decoding = decode(this.input)
+                    this.encodingVersion = decoding.version
+                    this.decodingError = decoding.error
+                    this.frequencies = decoding.frequencies
+                    this.tree = decoding.tree
+                    this.decodedText = decoding.result
+                    this.originalSize = decoding.originalSize
+                    this.compressedSize = decoding.compressedSize
+                },
+
+                copyResult(type) {
+                    const callback = ({success, error}) => {
+                        if (success) {
+                            this.$refs.snackbar.appear("📌 Скопировано!")
+                            this.snackbarType = "success"
+                        } else if (error === "unsupported") {
+                            this.$refs.snackbar.appear("🤔 Браузер не поддерживает копирование, извините 😢")
+                            this.snackbarType = "error"
+                        } else {
+                            this.$refs.snackbar.appear(`😲 Ошибка: ${error}`)
+                            this.snackbarType = "error"
+                        }
+                    }
+
+                    if (type === "text") {
+                        copyToClipboard(this.input, callback)
+                    } else if (type === "bin") {
+                        copyToClipboard(this.encodedBuffer.toBin(), callback)
+                    } else if (type === "hex") {
+                        copyToClipboard(this.encodedBuffer.toHex(), callback)
+                    } else if (type === "decoded") {
+                        copyToClipboard(this.decodedText, callback)
+                    } else {
+                        console.error(`Unknown result type: ${type}`)
+                    }
+                },
+
+                setInput(content) {
+                    this.input = content
+                    this.$refs.textarea.setContent(content)
+                },
+            },
+
+            created() {
+                this.doEncoding()
+            },
+
+            watch: {
+                input() {
+                    if (this.encodeMode) {
+                        this.doEncoding()
+                    } else {
+                        this.doDecoding()
+                    }
+                },
+
+                encodeMode() {
+                    if (this.encodeMode) {
+                        if (this.decodedText !== undefined) {
+                            this.setInput(this.decodedText)
+                            this.decodedText = undefined
+                        }
+                        this.doEncoding()
+                    } else {
+                        this.setInput(this.encodedBuffer.toHex())
+                        this.encodedBuffer = undefined
+                        this.doDecoding()
+                    }
+                }
+            }
+        })).catch(e => console.error(e))
+</script>
+
+</body>
+</html>

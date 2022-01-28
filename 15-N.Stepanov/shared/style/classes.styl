@@ -1,0 +1,79 @@
+@import "theme.styl"
+
+.center
+    display flex
+    justify-content center
+    align-items center
+
+    & > *
+        margin-left auto
+        margin-right auto
+
+.rounded
+    border-radius 8px
+
+.spaced-out
+    margin space(1)
+
+.spaced-out2
+    margin space(2)
+
+.spaced-out3
+    margin space(3)
+
+.hidden
+    display none
+
+.shadow
+    shadow()
+
+.glassy-bg
+    background-color rgba(#FFF, 0.75)
+    backdrop-filter blur(3px)
+
+.absolute
+    position absolute
+    top 0
+    left 0
+
+.smaller
+    font-size 14px
+
+.lighten
+    color $text-lighten
+
+.secondary
+    background-color $secondary
+
+.flex
+    display flex
+
+.grow
+    flex-grow 1
+
+.full-width
+    width 100%
+
+.pre
+    white-space pre
+
+.break-words
+    overflow-wrap break-word
+    word-break break-all
+
+.not-break-words
+    overflow-wrap normal
+    word-break normal
+
+ul.table-of-contents
+    list-style "📌"
+
+    & > li
+        font-size 24px
+        font-weight bold
+        margin space(2)
+
+        & > ul
+            font-weight normal
+            list-style "🤔"
+            font-size 18px

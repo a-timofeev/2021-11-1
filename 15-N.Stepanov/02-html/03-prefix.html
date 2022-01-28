@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>🤔</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../shared/style/stylesheet.css">
+</head>
+<body>
+
+<header class="shadow glassy-bg">
+    <h1>Чего вы ожидаете?😤</h1>
+    <img src="https://images.shoutwiki.com/ytp/thumb/9/97/%D0%A0%D0%B8%D0%BA%D0%B0%D1%80%D0%B4%D0%BE_%D0%9C%D0%B8%D0%BB%D0%BE%D1%81.jpg/300px-%D0%A0%D0%B8%D0%BA%D0%B0%D1%80%D0%B4%D0%BE_%D0%9C%D0%B8%D0%BB%D0%BE%D1%81.jpg"
+         width="48" height="48" alt="boom"/>
+</header>
+
+<main class="shadow">
+    <h2>
+        Префикс функция онлайн👩‍
+    </h2>
+
+    <label>
+        <input id="s-input" class="shadow" value="абоба"/>
+    </label>
+
+    <button class="shadow" onclick="calc()">
+        Вычислить
+    </button>
+
+    <div class="spaced-out">
+        Результат: <span id="result" class="center"></span>
+    </div>
+
+    <a href="../index.html">Назад</a>
+</main>
+
+<script>
+    function calc() {
+        const s = document.getElementById("s-input").value;
+        const resultEl = document.getElementById("result");
+        const tableEl = document.createElement("table");
+        const tableRow = document.createElement("tr");
+        resultEl.innerHTML = "";
+
+        const pi = prefix(s);
+        console.log(pi);
+
+        for (let p of pi) {
+            const cell = document.createElement("td");
+            cell.innerText = p;
+            tableRow.appendChild(cell);
+        }
+
+        tableEl.appendChild(tableRow);
+        resultEl.appendChild(tableEl);
+    }
+
+    function prefix(s) {
+        const n = s.length;
+        if (n === 0) return [];
+        const pi = Array(n);
+        pi[0] = 0;
+        for (let i = 1; i < n; i++) {
+            let j = pi[i - 1];
+            while (j > 0 && s[i] !== s[j]) {
+                j = pi[j - 1];
+            }
+            if (s[i] === s[j]) j++;
+            pi[i] = j;
+        }
+        return pi;
+    }
+
+</script>
+</body>
+</html>

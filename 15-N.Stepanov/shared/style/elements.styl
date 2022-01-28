@@ -1,0 +1,106 @@
+@import "theme.styl"
+@import "classes.styl"
+
+html, body, #root
+    min-height 100vh
+    padding 0
+    margin 0
+    font-family $font-stack
+    font-size 18px
+    background-color $bg-color-accent
+
+#root
+    display flex
+    flex-direction column
+
+header, footer
+    $padding = space(2)
+    padding $padding
+    width "calc(100% - %s)" % ($padding * 2)
+    display flex
+
+header
+    @extend .shadow
+    @extend .glassy-bg
+    position sticky
+    top 0
+    margin-bottom space(2)
+
+    & > h1
+        font-size 42px
+        flex-grow 1
+        margin 0
+
+main
+    @extend .shadow
+    margin auto
+    width 800px
+    max-width 95vw
+    padding space(4)
+    flex-grow 1
+    display flex
+    flex-direction column
+    background-color $bg-color
+
+    & > h2
+        font-size 32px
+        padding 0 space(6)
+
+    & > h3
+        font-size 24px
+        padding 0 space(6)
+
+footer
+    @extend .shadow
+    margin-top space(2)
+    background-color $bg-color
+
+input, input:focus
+    @extend .rounded
+    outline none
+    border none
+    font-size 20px
+    padding space(1)
+
+button, select
+    @extend .shadow
+    @extend .rounded
+    outline none
+    border none
+    background-color $primary
+    min-width 4em
+    font-size 20px
+    padding space(1)
+    cursor pointer
+    transition background-color 0.3s
+
+    &:active
+        background-color $primary-light
+        transition background-color 0s
+
+textarea
+    @extend .rounded
+    outline none
+    border none
+    font-size 20px
+    font-family $font-stack
+    width 100%
+    background-color $bg-color-accent
+    padding space(2)
+
+a
+    color $primary
+    text-decoration none
+
+    &:visited
+        color $primary-dark
+
+table
+    background-color $primary-light
+    table-layout fixed
+
+    .header-cell, .highlight
+        background-color $primary-dark
+
+table td, th
+    padding space(1)

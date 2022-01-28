@@ -1,0 +1,394 @@
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.center > * {
+  margin-left: auto;
+  margin-right: auto;
+}
+.rounded,
+input,
+input:focus,
+button,
+select,
+textarea,
+.ui-textarea,
+.button-group {
+  border-radius: 8px;
+}
+.spaced-out {
+  margin: 8px;
+}
+.spaced-out2 {
+  margin: 16px;
+}
+.spaced-out3 {
+  margin: 24px;
+}
+.hidden {
+  display: none;
+}
+.shadow,
+header,
+main,
+footer,
+button,
+select,
+.button-group {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+.glassy-bg,
+header {
+  background-color: rgba(255,255,255,0.75);
+  backdrop-filter: blur(3px);
+}
+.absolute {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.smaller {
+  font-size: 14px;
+}
+.lighten {
+  color: #424242;
+}
+.secondary {
+  background-color: #ec407a;
+}
+.flex {
+  display: flex;
+}
+.grow {
+  flex-grow: 1;
+}
+.full-width {
+  width: 100%;
+}
+.pre {
+  white-space: pre;
+}
+.break-words {
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+.not-break-words {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+ul.table-of-contents {
+  list-style: "📌";
+}
+ul.table-of-contents > li {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 16px;
+}
+ul.table-of-contents > li > ul {
+  font-weight: normal;
+  list-style: "🤔";
+  font-size: 18px;
+}
+html,
+body,
+#root {
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  background-color: #f0f0f0;
+}
+#root {
+  display: flex;
+  flex-direction: column;
+}
+header,
+footer {
+  padding: 16px;
+  width: calc(100% - 32px);
+  display: flex;
+}
+header {
+  position: sticky;
+  top: 0;
+  margin-bottom: 16px;
+}
+header > h1 {
+  font-size: 42px;
+  flex-grow: 1;
+  margin: 0;
+}
+main {
+  margin: auto;
+  width: 800px;
+  max-width: 95vw;
+  padding: 32px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+main > h2 {
+  font-size: 32px;
+  padding: 0 48px;
+}
+main > h3 {
+  font-size: 24px;
+  padding: 0 48px;
+}
+footer {
+  margin-top: 16px;
+  background-color: #fff;
+}
+input,
+input:focus {
+  outline: none;
+  border: none;
+  font-size: 20px;
+  padding: 8px;
+}
+button,
+select {
+  outline: none;
+  border: none;
+  background-color: #62ddf3;
+  min-width: 4em;
+  font-size: 20px;
+  padding: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+button:active,
+select:active {
+  background-color: #9affff;
+  transition: background-color 0s;
+}
+textarea,
+.ui-textarea {
+  outline: none;
+  border: none;
+  font-size: 20px;
+  font-family: 'Roboto', sans-serif;
+  width: 100%;
+  background-color: #f0f0f0;
+  padding: 16px;
+}
+a {
+  color: #62ddf3;
+  text-decoration: none;
+}
+a:visited {
+  color: #16abc0;
+}
+table {
+  background-color: #9affff;
+  table-layout: fixed;
+}
+table .header-cell,
+table .highlight {
+  background-color: #16abc0;
+}
+table td,
+th {
+  padding: 8px;
+}
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.center > * {
+  margin-left: auto;
+  margin-right: auto;
+}
+.rounded,
+.ui-textarea,
+.button-group {
+  border-radius: 8px;
+}
+.spaced-out {
+  margin: 8px;
+}
+.spaced-out2 {
+  margin: 16px;
+}
+.spaced-out3 {
+  margin: 24px;
+}
+.hidden {
+  display: none;
+}
+.shadow,
+.button-group {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+.glassy-bg {
+  background-color: rgba(255,255,255,0.75);
+  backdrop-filter: blur(3px);
+}
+.absolute {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.smaller {
+  font-size: 14px;
+}
+.lighten {
+  color: #424242;
+}
+.secondary {
+  background-color: #ec407a;
+}
+.flex {
+  display: flex;
+}
+.grow {
+  flex-grow: 1;
+}
+.full-width {
+  width: 100%;
+}
+.pre {
+  white-space: pre;
+}
+.break-words {
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+.not-break-words {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+ul.table-of-contents {
+  list-style: "📌";
+}
+ul.table-of-contents > li {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 16px;
+}
+ul.table-of-contents > li > ul {
+  font-weight: normal;
+  list-style: "🤔";
+  font-size: 18px;
+}
+.column-layout {
+  display: flex;
+}
+.column-layout > * {
+  flex-grow: 1;
+  margin: 8px;
+}
+.ui-button.disabled {
+  background-color: #dedede;
+  cursor: not-allowed;
+}
+.ui-textarea {
+  resize: vertical;
+  min-height: 200px;
+}
+.button-group {
+  overflow: hidden;
+  display: flex;
+}
+.button-group > button {
+  margin: 0;
+  box-shadow: none;
+  border-radius: 0;
+  border-left: rgba(0,0,0,0.533) solid 1px;
+}
+.button-group > button:first-child {
+  border-left: none;
+}
+.ui-snackbar {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+}
+.ui-snackbar .snackbar-content {
+  padding: 16px;
+  width: 420px;
+  transform: scale(0.5);
+  opacity: 0;
+  transition: transform 0.25s ease-in-out, opacity 0.125s ease-in-out;
+  transition-delay: 0s, 0.125s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  background-color: #62ddf3;
+}
+.ui-snackbar .snackbar-content.secondary {
+  background-color: #ec407a;
+}
+.ui-snackbar .snackbar-content.info {
+  background-color: #3fc5ff;
+}
+.ui-snackbar .snackbar-content.success {
+  background-color: #76f662;
+}
+.ui-snackbar .snackbar-content.warning {
+  background-color: #ffd93f;
+}
+.ui-snackbar .snackbar-content.error {
+  background-color: #ff3f3f;
+}
+.ui-snackbar .snackbar-content.visible {
+  transform: scale(1);
+  opacity: 1;
+}
+#root,
+#root .accent-bg {
+  background-color: #e7edef;
+  transition: background-color 0.7s;
+}
+#root.secondary,
+#root.secondary .accent-bg {
+  background-color: #efe7e9;
+}
+#root .shadow {
+  box-shadow: 0 4px 12px rgba(11,122,142,0.5);
+  transition: box-shadow 0.7s;
+}
+#root.secondary .shadow {
+  box-shadow: 0 4px 12px rgba(139,14,56,0.5);
+}
+#root #mode-switcher {
+  transition: background-color 0.7s;
+  width: 20em;
+}
+#input-main {
+  max-height: 600px;
+  overflow-y: scroll;
+  transition: height 0.2s;
+}
+#frequency-chart {
+  --color: #62ddf3;
+  --color-secondary: #ec407a;
+}
+#frequency-chart .tick > text {
+  font-size: 14px;
+}
+#frequency-chart text.title {
+  font-size: 20px;
+}
+#huffman-tree-chart {
+  --color: #62ddf3;
+  --color-secondary: #ff77a9;
+}
+#huffman-tree-chart text {
+  font-size: 30px;
+  font-weight: bolder;
+}
+#algorithm-result .algorithm-result-content {
+  padding: 16px;
+  max-height: 400px;
+  overflow-y: scroll;
+}
+#algorithm-result .copy-buttons {
+  padding: 16px;
+}
+#algorithm-result .error {
+  font-weight: bold;
+  color: #ff3f3f;
+}

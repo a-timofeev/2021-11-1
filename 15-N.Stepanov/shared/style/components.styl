@@ -1,0 +1,66 @@
+.column-layout
+    display flex
+
+    & > *
+        flex-grow 1
+        margin space(1)
+
+.ui-button
+    &.disabled
+        background-color $disabled-color
+        cursor not-allowed
+
+.ui-textarea
+    @extend textarea
+    resize vertical
+    min-height 200px
+
+.button-group
+    @extend .rounded
+    @extend .shadow
+    overflow hidden
+    display flex
+
+    & > button
+        margin 0
+        box-shadow none
+        border-radius 0
+        border-left #0008 solid 1px
+
+        &:first-child
+            border-left none
+
+.ui-snackbar
+    position fixed
+    bottom space(2)
+    left space(2)
+
+    & .snackbar-content
+        padding space(2)
+        width 420px
+        transform scale(0.5)
+        opacity 0
+        transition transform 0.25s ease-in-out, opacity 0.125s ease-in-out
+        transition-delay 0s, 0.125s
+        shadow()
+
+        background-color $primary
+
+        &.secondary
+            background-color $secondary
+
+        &.info
+            background-color $info
+
+        &.success
+            background-color $success
+
+        &.warning
+            background-color $warning
+
+        &.error
+            background-color $error
+
+        &.visible
+            transform scale(1)
+            opacity 1
