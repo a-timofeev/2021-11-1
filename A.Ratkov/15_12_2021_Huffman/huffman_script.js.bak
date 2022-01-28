@@ -1,0 +1,17 @@
+function Huffman(obj) {
+	let s = obj.nice_text.value;
+	let chars = new Set();
+	let c = ' ';
+	let NumDiffChars = 0;
+	obj.size.value = String(s.length);
+	for (var i = 0; i < s.length; i++) {
+		if (chars.has(s[i]) === false) {
+			chars.add(s[i]);
+			NumDiffChars++;
+		}
+	}
+	obj.num_diff_chars.value = String(NumDiffChars);
+	let string1 = "This text consists of " + String(NumDiffChars) + " diffrerent chars:\n";
+	obj.str1.value = string1;
+	return chars;
+}
